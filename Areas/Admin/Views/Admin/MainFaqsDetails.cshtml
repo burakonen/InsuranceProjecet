@@ -1,0 +1,683 @@
+﻿@model Tuple<InsuranceProject.Areas.Admin.Model.IndexWM, InsuranceProject.Areas.Admin.Model.FaqsEditWM>
+
+@{
+    ViewData["Title"] = "SetToPolicy";
+    Layout = "~/Areas/Admin/Views/Shared/_adminLayout.cshtml";
+}
+
+
+<script>
+    $(document).ready(function () {
+        $('#myTable').DataTable({
+            language: {
+
+            },
+            "oLanguage": { "sSearch": "" },
+            "language": {
+                "searchPlaceholder": "Ara",
+                "paginate": {
+                    "next": '<i class="fa fa-fw fa-long-arrow-right">',
+                    "previous": '<i class="fa fa-fw fa-long-arrow-left">',
+
+                }
+            }
+        });
+    });
+
+</script>
+
+
+<div class="app-container app-theme-white body-tabs-shadow fixed-sidebar fixed-header">
+    <div class="app-header header-shadow">
+        <div class="app-header__logo">
+            <div class="logo-src"></div>
+            <div class="header__pane ml-auto">
+                <div>
+                    <button type="button" class="hamburger close-sidebar-btn hamburger--elastic" data-class="closed-sidebar">
+                        <span class="hamburger-box">
+                            <span class="hamburger-inner"></span>
+                        </span>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div class="app-header__mobile-menu">
+            <div>
+                <button type="button" class="hamburger hamburger--elastic mobile-toggle-nav">
+                    <span class="hamburger-box">
+                        <span class="hamburger-inner"></span>
+                    </span>
+                </button>
+            </div>
+        </div>
+        <div class="app-header__menu">
+            <span>
+                <button type="button" class="btn-icon btn-icon-only btn btn-primary btn-sm mobile-toggle-header-nav">
+                    <span class="btn-icon-wrapper">
+                        <i class="fa fa-ellipsis-v fa-w-6"></i>
+                    </span>
+                </button>
+            </span>
+        </div>   
+        <div class="app-header__content">
+            <div class="app-header-right">
+                <div class="header-btn-lg pr-0">
+                    <div class="widget-content p-0">
+                        <div class="widget-content-wrapper">
+                            <div class="widget-content-left">
+                                <div class="btn-group">
+                                    <a data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="p-0 btn">
+                                        <i class="fa fa-angle-down ml-2 opacity-8"></i>
+                                    </a>
+                                    <div tabindex="-1" role="menu" aria-hidden="true" class="dropdown-menu dropdown-menu-right">
+                                        <button type="button" tabindex="0" class="dropdown-item">User Account</button>
+                                        <button type="button" tabindex="0" class="dropdown-item">Settings</button>
+                                        <h6 tabindex="-1" class="dropdown-header">Header</h6>
+                                        <button type="button" tabindex="0" class="dropdown-item">Actions</button>
+                                        <div tabindex="-1" class="dropdown-divider"></div>
+                                        <button type="button" tabindex="0" class="dropdown-item">Dividers</button>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="widget-content-left  ml-3 header-user-info">
+                                <div class="widget-heading">
+                                    <span class="own">Gökhan Sarılar</span>
+                                </div>
+                                <div class="widget-subheading">
+                                    BMG Sigorta - CEO
+                                </div>
+                            </div>
+                            <div class="widget-content-right header-user-info ml-3">
+                                <button type="button" class="btn-shadow p-1 btn btn-primary btn-sm show-toastr-example">
+                                    <i class="fa text-white fa-calendar pr-1 pl-1"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="app-main">
+        <div class="app-sidebar sidebar-shadow">
+            <div class="scrollbar-sidebar">
+                <div class="app-sidebar__inner">
+                    <div class="group-dv">
+                        <ul class="vertical-nav-menu">
+
+                            <li class="app-sidebar__heading">Bireysel</li>
+                            <li>
+                                <a class="cat bg-dark">
+                                    <i class="metismenu-icon pe-7s-diamond"></i>
+                                    <span class="ct"> Kategoriler</span>
+                                    <i class="metismenu-state-icon pe-7s-angle-down caret-left"></i>
+                                </a>
+
+                                <ul>
+                                    <li>
+                                        <a asp-area="Admin" asp-controller="Category" asp-action="Index" asp-route-name="@Model.Item1.IndividualGroup.GroupName" class="new-cat">
+                                            <span class="nw-ct">
+                                                Kategorileri Düzenle
+                                            </span>
+                                        </a>
+                                    </li>
+                                    @foreach (var item in Model.Item1.CategoriesAndInsuranceList)
+                                    {
+                                        <li>
+                                            <a href="#" class="cat-name">
+                                                <i class="metismenu-icon pe-7s-diamond"></i>
+                                                <span class="cat-n"> @item.Name</span>
+                                                <i class="metismenu-state-icon pe-7s-angle-down caret-left"></i>
+                                            </a>
+                                            <ul class="cat-ul">
+                                                <li class="cat-li">
+                                                    <a class="add-pol" asp-area="Admin" asp-controller="Admin" asp-action="CreateInsurance" asp-route-name="@item.Name">
+                                                        <span>Poliçe Ekle </span>
+                                                    </a>
+                                                </li>
+                                                @foreach (var items in item.InsuranceListName)
+                                                {
+                                                    <li class="cat-li">
+                                                        <a asp-area="Admin" asp-controller="Admin" asp-action="InsurancePolicy" asp-route-url="@items.Url">
+                                                            <span>@items.Name</span>
+                                                        </a>
+                                                    </li>
+                                                }
+                                            </ul>
+                                        </li>
+
+
+                                    }
+                                </ul>
+                            </li>
+                            <div class="cat-bor"></div>
+                            <li class="app-sidebar__heading">Kurumsal</li>
+                            <li>
+                                <a href="#" class="cat bg-dark">
+                                    <i class="metismenu-icon pe-7s-diamond"></i>
+                                    <span class="ct"> Kategoriler</span>
+                                    <i class="metismenu-state-icon pe-7s-angle-down caret-left"></i>
+                                </a>
+
+                                <ul>
+                                    <li>
+                                        <a asp-area="Admin" asp-controller="Category" asp-action="Index" asp-route-name="@Model.Item1.CorporateGroup.GroupName" class="new-cat">
+                                            <span class="nw-ct">
+                                                Kategorileri Düzenle
+                                            </span>
+                                        </a>
+                                    </li>
+                                    @foreach (var item in Model.Item1.CorporatecategoryGroups)
+                                    {
+                                        <li>
+                                            <a href="#" class="cat-name">
+                                                <i class="metismenu-icon pe-7s-diamond"></i>
+                                                <span class="cat-n"> @item.Name</span>
+                                                <i class="metismenu-state-icon pe-7s-angle-down caret-left"></i>
+                                            </a>
+                                            <ul>
+                                                <li class="cat-li">
+                                                    <a class="add-pol" asp-area="Admin" asp-controller="Admin" asp-action="CreateInsurance" asp-route-name="@item.Name">
+                                                        <span>Poliçe Ekle </span>
+                                                    </a>
+                                                </li>
+                                                @foreach (var items in item.InsuranceListName)
+                                                {
+                                                    <li class="cat-li">
+                                                        <a asp-area="Admin" asp-controller="Admin" asp-action="InsurancePolicy" asp-route-url="@items.Url">
+                                                            <span>@items.Name</span>
+                                                        </a>
+                                                    </li>
+                                                }
+                                            </ul>
+                                        </li>
+
+
+                                    }
+                                </ul>
+                            </li>
+
+                        </ul>
+                    </div>
+                    <div class="log-gr">
+                        <a href="/account/logout" class="log" id="lg">
+                            <i class="fa-solid fa-arrow-right-from-bracket"></i>
+                            Çıkış Yap
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="app-main__outer">
+            <div class="app-main__inner">
+                <div class="app-page-title">
+                    <div class="page-title-wrapper">
+                        <div class="page-title-heading">
+                            <div class="page-title-icon">
+                                <i class="pe-7s-car icon-gradient bg-mean-fruit">
+                                </i>
+                            </div>
+                            <div class="d-flex justify-content-between">
+                                <span class="dashboard-text">@Model.Item1.MainFaqs.InsuranceList.Name Sık Sorulanlar Düzenleme Sayfası</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row new-info-row">
+                    <div class="col-sm-12 col-md-11 col-lg-11 col-xl-11 mb-2">
+                        <div class="d-flex justify-content-end mb-3">
+                            <a href="#" data-toggle="modal" data-target="#newGuaranteeName" class="new-gua-faq bg-dark">Sık Sorulanlar için yeni bilgi ekle</a>
+
+                            <!-- ekleme-modal -->
+                            <div class="modal fade" id="newGuaranteeName" data-backdrop="false" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="exampleModalLabel">Sık Sorulanlar Düzenleme Ekranı</h5>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <form id="formFaqs">
+                                                <div class="form-group">
+                                                    <label class="label-g">Soru</label>
+                                                    <input class="form-control questionNew" name="question">
+                                                    <input type="hidden" class="form-control InsuranceListId" name="InsuranceListId" value="@Model.Item1.MainFaqs.InsuranceList.Id">
+                                                    <input type="hidden" class="form-control MainFaqsId" name="MainFaqsId" value="@Model.Item1.MainFaqs.Id">
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="label-g">Cevap</label>
+                                                    <textarea class="form-control answerAnswer" name="answer"></textarea>
+                                                </div>
+
+                                                <div class="btns">
+                                                    <button type="submit" class="btn btn-dark">Kaydet</button>
+                                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Kapat</button>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!--düzeneme modal-->
+                        <div class="modal fade" id="faqs-EditModal" data-backdrop="false" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalLabel">Sık Sorulanlar Düzenleme Ekranı</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+
+                                    <div class="modal-body">
+                                        <form asp-area="Admin" asp-controller="Admin" asp-action="FaqsEdit" method="POST">
+                                            <div class="form-group">
+                                                <label class="label-g">Soru</label>
+                                                <textarea asp-for="@Model.Item2.Question" class="form-control question" rows="4"></textarea>
+                                                <span asp-validation-for="@Model.Item2.Question"></span>
+                                                <input type="hidden" name="faqsId" class="form-control faqs-edit">
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="label-g">Cevap</label>
+                                                <input asp-for="@Model.Item2.Answer" class="form-control answer">
+                                                <span asp-validation-for="@Model.Item2.Answer"></span>
+                                            </div>
+                                            <div class="btns">
+                                                <button type="submit" class="btn btn-primary">Kaydet</button>
+                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Kapat</button>
+                                            </div>
+                                        </form>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="card card-ins mb-3">
+                            <div class="wrapper">
+                                @foreach (var faqs in Model.Item1.MainFaqs.Faqs)
+                                {
+                                    <div class="d-flex acco">
+                                        <div class="acco-group">
+                                            <button class="toggle"><span>@faqs.Question</span></button>
+                                            <div class="content">
+                                                <p>@faqs.Answer</p>
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <div class="d-flex faqs-btn-group">
+                                                <button data-toggle="modal" data-id="@faqs.Id" data-target="#faqs-EditModal" id="faqsEditModal" class="btn btn-dark all-button">Düzenle</button>
+                                                <button id="btn-delete" class="btn btn-light all-button">Sil</button>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                }
+                            </div>
+                            <!-- Modal -->
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<script>
+    $(document).on("click", "#guaranteeNameId", function () {
+        var passedID = $(this).data('id');
+        $(".modal-body .guaranteeName").val(passedID);
+    });
+
+</script>
+
+
+<script type="text/javascript">
+
+    $(function () {
+        $("tbody").on("click", "#guaranteeNameId", function () {
+
+            let btn = $(this);
+            let id = btn.data("id");
+            $.ajax({
+                type: "GET",
+                dataType: "json",
+                url: "/admin/admin/getguaranteename/" + id,
+                success: function (data) {
+                    let parseData = JSON.parse(data);
+                    console.log(parseData);
+
+                    let value = "";
+                    value += `${parseData.Name}`;
+
+                    $(".gu-ran").val(value);
+
+
+
+
+                }
+            });
+
+        });
+    });
+
+
+    function auto_grow(element) {
+        element.style.height = "5px";
+        element.style.height = (element.scrollHeight) + "px";
+    }
+
+</script>
+
+
+<script>
+
+
+    $(function () {
+        $("tbody").on("click", "#deleteGuaranteeNameId", function () {
+            var btn = $(this);
+            bootbox.confirm("<h5>Silmek istediğinize emin misiniz?</h5>", function (result) {
+                if (result) {
+                    var id = btn.data("id");
+                    console.log(id);
+                    $.ajax({
+                        type: "POST",
+                        url: "/Admin/Admin/deletefaqs/" + id,
+                        success: function () {
+                            btn.parent().parent().remove();
+                            console.log("başarılı");
+
+                        },
+
+                    });
+
+                };
+
+            });
+
+        });
+    });
+
+
+
+
+</script>
+
+
+<script>
+    $(function () {
+
+
+        $('#formGuarantee').validate({ // initialize the plugin
+            rules: {
+                guaranteeInp: {
+                    required: true,
+                },
+                guaranteeNameInp: {
+                    required: true,
+                }
+            },
+            messages: {
+                guaranteeInp: "Teminat adı zorunlu bir alan",
+                guaranteeNameInp: "Teminat detayları zorunlu bir alan"
+            },
+
+            submitHandler: function (form) {
+                var data = {
+                    Guarantee: $("#guarantee").val(),
+                    GuaranteeName: $("#guaranteeName").val(),
+                    insuranceListId: $("#insuranceListId").val()
+                }
+
+                $.ajax({
+                    type: "post",
+                    data: data,
+                    dataType: "JSON",
+                    url: "/admin/admin/AddNewGuaranteeName/",
+                    success: function (data) {
+                        let result = jQuery.parseJSON(data);
+                        console.log(result);
+                        var value = "";
+                        value += `${result.Name}`;
+                        $(".sss").html(value);
+                    }
+                })
+            }
+
+        });
+
+
+
+
+    });
+</script>
+
+
+<script>
+    let toggles = document.getElementsByClassName("toggle");
+    let contentDiv = document.getElementsByClassName("content");
+    let icons = document.getElementsByClassName("icon");
+
+    for (let i = 0; i < toggles.length; i++) {
+        toggles[i].addEventListener("click", () => {
+            if (parseInt(contentDiv[i].style.height) != contentDiv[i].scrollHeight) {
+                contentDiv[i].style.height = contentDiv[i].scrollHeight + "px";
+                toggles[i].style.color = "#0084e9";
+                icons[i].classList.remove("fa-plus");
+                icons[i].classList.add("fa-minus");
+            } else {
+                contentDiv[i].style.height = "0px";
+                toggles[i].style.color = "#111130";
+                icons[i].classList.remove("fa-minus");
+                icons[i].classList.add("fa-plus");
+            }
+
+            for (let j = 0; j < contentDiv.length; j++) {
+                if (j !== i) {
+                    contentDiv[j].style.height = 0;
+                    toggles[j].style.color = "#111130";
+                    icons[j].classList.remove("fa-minus");
+                    icons[j].classList.add("fa-plus");
+                }
+            }
+        });
+    }
+
+
+</script>
+
+
+<script>
+    $(document).on("click", "#guaranteeeId", function () {
+        var passedID = $(this).data('id');
+        $(".modal-body .guarantee").val(passedID);
+    });
+
+</script>
+
+
+<script type="text/javascript">
+
+    $(function () {
+        $("tbody").on("click", "#guaranteeeId", function () {
+
+            let btn = $(this);
+            let id = btn.data("id");
+            $.ajax({
+                type: "GET",
+                dataType: "json",
+                url: "/admin/admin/getguarantee/" + id,
+                success: function (data) {
+                    let parseData = JSON.parse(data);
+                    console.log(parseData);
+
+                    let value = "";
+                    value += `${parseData.Name}`;
+
+                    $(".gu-ran").val(value);
+
+
+
+
+                }
+            });
+
+        });
+    });
+
+
+
+</script>
+
+
+<script>
+    $(function () {
+
+
+        $('#formFaqs').validate({ // initialize the plugin
+            rules: {
+                question: {
+                    required: true,
+                },
+                answer: {
+                    required: true,
+                }
+            },
+            messages: {
+                question: "Soru zorunlu bir alan",
+                answer: "Cevap zorunlu bir alan"
+            },
+
+            submitHandler: function (form) {
+                var data = {
+                    Question: $(".questionNew").val(),
+                    Answer: $(".answerNew").val(),
+                    InsuranceListId: $(".InsuranceListId").val(),
+                    MainFaqsId: $(".MainFaqsId").val()
+                }
+
+                $.ajax({
+                    type: "post",
+                    data: data,
+                    dataType: "JSON",
+                    url: "/admin/admin/NewFaqsCreate/",
+                    success: function (data) {
+                        let result = jQuery.parseJSON(data);
+                        console.log(result);
+                        var value = "";
+                        value += `  <div class="d-flex">
+                                        <button class="toggle"><span>${result.Question}</span></button>
+                                        <div class="d-flex faqs-btn-group">
+                                            <button class="btn btn-warning faqs-btn">Düzenle</button>
+                                            <button class="btn btn-danger faqs-btn">Sil</button>
+                                        </div>
+                                    </div>
+                                     <div class="content">
+                                        <p>${result.Answer}</p>
+                                    </div>`;
+                        $(".wrapper").append(value);
+                    }
+                })
+            }
+
+        });
+
+
+
+
+    });
+</script>
+
+
+<script>
+    $(document).on("click", "#faqsEditModal", function () {
+        var passedID = $(this).data('id');
+        $(".modal-body .faqs-edit").val(passedID);
+        var a = $(".faqs-edit").val();
+        console.log(a);
+    });
+
+</script>
+
+<script type="text/javascript">
+
+    $(function () {
+        $(".wrapper").on("click", "#faqsEditModal", function () {
+
+            let btn = $(this);
+            let id = btn.data("id");
+            $.ajax({
+                type: "GET",
+                dataType: "json",
+                url: "/admin/admin/GetFaqs/" + id,
+                success: function (data) {
+                    let parseData = JSON.parse(data);
+
+                    let questions = "";
+                    questions += `${parseData.Question}`;
+
+                    $(".question").val(questions);
+
+
+                    let answers = "";
+                    answers += `${parseData.Answer}`;
+
+                    $(".answer").val(answers);
+
+
+                }
+            });
+
+        });
+    });
+
+
+    function auto_grow(element) {
+        element.style.height = "5px";
+        element.style.height = (element.scrollHeight) + "px";
+    }
+
+</script>
+
+
+<script>
+
+
+    $(function () {
+        $(".wrapper").on("click", "#btn-delete", function () {
+            var btn = $(this);
+            bootbox.confirm("<h5>Silmek istediğinize emin misiniz?</h5>", function (result) {
+                if (result) {
+                    var id = btn.data("id");
+                    console.log(id);
+                    $.ajax({
+                        type: "POST",
+                        url: "/Admin/Admin/deletefaqs/" + id,
+                        success: function () {
+                            btn.parent().parent().parent().remove();
+
+                        },
+
+                    });
+
+                };
+
+            });
+
+        });
+    });
+
+
+
+
+</script>

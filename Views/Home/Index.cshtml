@@ -1,0 +1,47 @@
+﻿@{
+    ViewData["Title"] = "Index";
+}
+
+
+@await Component.InvokeAsync("NavbarComponent")
+
+
+<div class="row sub-header" style="margin:0">
+    <div class="col-md-10 d-flex sub-header-col align-items-center">
+        <div class="off-t">
+            <h3 class="off-txt">Hızlı Teklif Al</h3>
+        </div>
+        <div class="row offer-box">
+            @foreach (var item in Model.QuickOffers)
+            {
+                <div class="col-md-4 responsive-offer-col">
+                    <a asp-controller="Home" asp-action="InsuranceForm" asp-route-url="@item.InsuranceList.SEOURL" class="d-flex">
+                        <div class="bx">
+                            <div>
+                                <span class="ins-txt">@item.InsuranceList.Name</span><br />
+                            </div>
+                            <span><i class="@item.İcon"></i></span>
+                        </div>
+                    </a>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+<div class="container">
+    <div class="row rowx">
+        <div class="col-md-3 colx">
+
+        </div>
+        <div class="col-md-3 colx">
+
+        </div>
+        <div class="col-md-3 colx">
+
+        </div>
+        <div class="col-md-3 colx">
+
+        </div>
+    </div>
+</div>

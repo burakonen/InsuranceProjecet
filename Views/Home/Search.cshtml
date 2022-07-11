@@ -1,0 +1,68 @@
+﻿@model InsuranceProject.Models.SearchWm
+
+
+@{
+    ViewData["Title"] = "Search";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+@await Component.InvokeAsync("PureNavbar")
+
+
+<div class="container search-result-row">
+    <div class="row header-row">
+        <div class="col-md-6 header">
+            <h1>Arama Sonuçları</h1>
+            <span>(@ViewBag.GetResultCount)</span>
+        </div>
+    </div>
+    <div class="row d-flex mt-5 mb-5 justify-content-center" id="input-row">
+        <div class="col-md-8">
+            <form action="/arama/" method="get">
+                <div class="form-group d-flex">
+                    <input type="text" class="form-control" name="query" value="@ViewBag.searchName" placeholder="Ara.." id="form-input">
+                    <button type="submit" id="search" class="search-button">Ara</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div class="row d-flex justify-content-center res-row">
+        <div class="col-md-12">
+            <div class="row" style="margin:0">
+                @foreach (var items in Model.ResultOfSearch)
+                {
+
+                    <div class="col-md-12 s-col">
+                        <div class="card s-card">
+                            <a asp-controller="home" asp-action="PolicyPages" asp-route-url="@items.Url" id="toSpin" class="c-anc">
+                                <h4 class="ins-n">@items.InsuranceName</h4>
+                                <div class="row" style="margin:0">
+                                    <div class="col-md-3 p-0">
+                                        <div class="s-im">
+                                            @foreach (var im in items.Image)
+                                            {
+                                                <img src="~/@im.FileName" class="s-image" />
+                                            }
+                                        </div>
+                                    </div>
+                                    <div class="col-md-9 card-description-col">
+                                        @foreach (var im in items.Description)
+                                        {
+                                            <h3 class="card-description">
+                                                @Html.Raw(im.Descriptions)
+                                            </h3>
+                                        }
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+
+                }
+            </div>
+        </div>
+    </div>
+</div>
+

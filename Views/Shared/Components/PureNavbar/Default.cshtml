@@ -1,0 +1,260 @@
+﻿@model InsuranceProject.Models.GroupsModel
+
+
+
+
+
+
+<nav>
+    <div class="container">
+        <div class="nav-list">
+            <a href="#" class="brand">BMG Sigorta</a>
+            @*<input type="radio" name="slider" id="menu-btn">
+                <input type="radio" name="slider" id="close-btn">*@
+            <ul class="nav-links">
+                <label for="close-btn" class="btn close-btn"><i class="fas fa-times"></i></label>
+                <li>
+                    <a href="/" class="top-item">Bireysel</a>
+                </li>
+                <li>
+                    <a asp-controller="Institutional" asp-action="Index" class="top-item">Kurumsal</a>
+                </li>
+                <li>
+                    <a href="#" class="top-item">İletişim</a>
+                </li>
+                <li>
+                    <a href="#" class="top-item">Biz Kimiz</a>
+                </li>
+
+                <li class="nav-form-item"
+                    <form id="searchform" action="/arama" method="get">
+                        <div class="search-box">
+                            <input type="text" name="query" value="@ViewBag.searchName" id="s" placeholder="Nasıl yardımcı olabiliriz?">
+                            <div class="search-icon">
+                                <i class="fas fa-search"></i>
+                            </div>
+                            <div class="cancel-icon">
+                                <i class="fas fa-times"></i>
+                            </div>
+                            <div class="search-data">
+                            </div>
+                        </div>
+                    </form>
+                </li>
+            </ul>
+        </div>
+
+
+        <div class="responsive-nav-list">
+            <input type="radio" name="slider" id="menu-btn" class="inp">
+            <input type="radio" name="slider" id="close-btn" class="inp">
+            <div class="responsive-header-menu">
+                <a href="/" class="responsive-brand">BMG Sigorta</a>
+                <label for="menu-btn" class="btn menu-btn"><i class="fas fa-bars"></i></label>
+            </div>
+            <ul class="sub-nav-links">
+                <div class="responsive-brand-header">
+                    <div class="responsive-header-group">
+                        <a href="#" class="responsive-brand">BMG Sigorta</a>
+                        <label for="close-btn" class="btn close-btn"><i class="fas fa-times"></i></label>
+                    </div>
+                    <div class="responsive-input-form">
+                        <form action="/arama/" method="get">
+                            <div class="input-group responsive-input-group">
+                                <span class="input-group-text" id="basic-addon1"><i class="fa-solid fa-magnifying-glass"></i></span>
+                                <input type="text" name="query" value="@ViewBag.searchName" id="s" class="form-control responsive-input" placeholder="Nasıl yardımcı olabiliriz?">
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <li>
+
+                    @foreach (var groups in Model.Groups)
+                    {
+                        <div class="accordion" id="accordionExample">
+                            <div class="card_">
+                                <div class="card-header responsive-card-header" id="headingOne">
+                                    <div class="responsive-card-header-group">
+                                        <a href="/" class="group-name">@groups.Name</a>
+                                        <button class="accordion-button-gr" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
+                                            <i class="fa-solid fa-angle-down"></i>
+                                        </button>
+                                    </div>
+                                </div>
+
+                                <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample">
+                                    <div class="card-body">
+                                        <ul class="responsive-submenu">
+
+                                            <div class="bs-example">
+                                                <div class="panel-group" id="accordionY">
+                                                    @{int i = 1;}
+                                                    @foreach (var item in groups.GroupsAndCategories)
+                                                    {
+                                                        <div class="panel panel-default">
+                                                            <div class="card-header accordion-category-header" id="headingSub">
+                                                                <div class="accordion-category-header-group">
+                                                                    <button class="accordion-button" data-toggle="collapse" data-parent="#accordionY" data-target="#collapse_@i">
+                                                                        @item.Category.Name
+                                                                        <i class="fa-solid fa-angle-down"></i>
+                                                                    </button>
+                                                                </div>
+                                                            </div>
+                                                            <div id="collapse_@i" class="panel-collapse collapse">
+                                                                <div class="panel-body">
+                                                                    <ul>
+                                                                        @foreach (var items in item.Category.InsuranceList)
+                                                                        {
+                                                                            <li>
+                                                                                <a asp-controller="Home" asp-action="PolicyPages" asp-route-url="@items.SEOURL"> @items.Name</a>
+                                                                            </li>
+                                                                        }
+                                                                    </ul>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        i++;
+                                                    }
+                                                </div>
+                                            </div>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    }
+
+
+                    @foreach (var groups in Model.GroupsCorporate)
+                    {
+
+                        <div class="accordion" id="accordionTwo">
+                            <div class="card_">
+                                <div class="card-header responsive-card-header" id="headingThree">
+                                    <div class="responsive-card-header-group">
+                                        <a asp-controller="Institutional" asp-action="Index" class="group-name">@groups.Name</a>
+                                        <button class="accordion-button-gr" type="button" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                                            <i class="fa-solid fa-angle-down"></i>
+                                        </button>
+                                    </div>
+                                </div>
+
+                                <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordionTwo">
+                                    <div class="card-body">
+                                        <ul class="responsive-submenu">
+                                            <div class="bs-example">
+                                                <div class="panel-group" id="accordionX">
+                                                    @{int a = 1;}
+                                                    @foreach (var item in groups.GroupsAndCategories)
+                                                    {
+                                                        <div class="panel panel-default">
+                                                            <div class="card-header accordion-category-header" id="headingSub">
+                                                                <div class="accordion-category-header-group">
+                                                                    <button class="accordion-button" data-toggle="collapse" data-parent="#accordionX" data-target="#collapseX_@a">
+                                                                        @item.Category.Name
+                                                                        <i class="fa-solid fa-angle-down"></i>
+                                                                    </button>
+                                                                </div>
+                                                            </div>
+                                                            <div id="collapseX_@a" class="panel-collapse collapse">
+                                                                <div class="panel-body">
+                                                                    <ul>
+                                                                        @foreach (var items in item.Category.InsuranceList)
+                                                                        {
+                                                                            <li>
+                                                                                <a asp-controller="Institutional" asp-action="PolicyPages" asp-route-url="@items.SEOURL">@items.Name</a>
+                                                                            </li>
+                                                                        }
+                                                                    </ul>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        a++;
+                                                    }
+                                                </div>
+                                            </div>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    }
+
+
+                    <div class="accordion" id="accordionExample">
+                        <div class="card_">
+                            <div class="card-header responsive-card-header" id="headingThree">
+                                <div class="responsive-card-header-group">
+                                    <a asp-controller="Institutional" asp-action="Index" class="group-name">İletişim</a>
+                                    <button class="accordion-button-gr" type="button" data-toggle="collapse" data-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
+                                        <i class="fa-solid fa-angle-down"></i>
+                                    </button>
+                                </div>
+                            </div>
+
+                            <div id="collapseFour" class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample">
+                                <div class="card-body">
+                                    Some placeholder content for the first accordion panel. This panel is shown by default, thanks to the <code>.show</code> class.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="accordion" id="accordionExample">
+                        <div class="card_">
+                            <div class="card-header responsive-card-header" id="headingThree">
+                                <div class="responsive-card-header-group">
+                                    <a asp-controller="Institutional" asp-action="Index" class="group-name">Biz Kimiz</a>
+                                    <button class="accordion-button-gr" type="button" data-toggle="collapse" data-target="#collapseFive" aria-expanded="false" aria-controls="collapseFour">
+                                        <i class="fa-solid fa-angle-down"></i>
+                                    </button>
+                                </div>
+                            </div>
+
+                            <div id="collapseFive" class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample">
+                                <div class="card-body">
+                                    Some placeholder content for the first accordion panel. This panel is shown by default, thanks to the <code>.show</code> class.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="contact-us-button-responsive-pure">
+                        <button class="contact-button-responsive-pure">Bize Ulaşın</button>
+                    </div>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+
+    <script>
+    const searchBox = document.querySelector(".search-box");
+    const searchBtn = document.querySelector(".search-icon");
+    const cancelBtn = document.querySelector(".cancel-icon");
+    const searchInput = document.querySelector("input");
+    const searchData = document.querySelector(".search-data");
+    searchBtn.onclick = () => {
+        searchBox.classList.add("active");
+        searchBtn.classList.add("active");
+        searchInput.classList.add("active");
+        cancelBtn.classList.add("active");
+        searchInput.focus();
+        if (searchInput.value != "") {
+            var values = searchInput.value;
+            searchData.classList.remove("active");
+            searchData.innerHTML = "You just typed " + "<span style='font-weight: 500;'>" + values + "</span>";
+        } else {
+            searchData.textContent = "";
+        }
+    }
+    cancelBtn.onclick = () => {
+        searchBox.classList.remove("active");
+        searchBtn.classList.remove("active");
+        searchInput.classList.remove("active");
+        cancelBtn.classList.remove("active");
+        searchData.classList.toggle("active");
+        searchInput.value = "";
+    }
+    </script>

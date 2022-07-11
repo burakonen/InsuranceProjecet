@@ -1,0 +1,105 @@
+﻿@model Tuple<InsuranceProject.Models.ViewModel.UserWM, InsuranceProject.Models.ViewModel.InsuranceFormWM>
+
+@{
+    ViewData["Title"] = "InsuranceForm";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<header>
+    <nav class="navbar navbar-expand-lg navbar-light" id="navId">
+        <div class="container d-flex justify-content-between">
+            <a class="navbar-brand" href="/">BMG SİGORTA</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <span class="off">@Model.Item2.InsuranceList.Name Teklifine Hoş Geldiniz</span>
+        </div>
+    </nav>
+</header>
+
+<div class="container form-container">
+    <div class="row d-flex justify-content-center fr" style="margin:0">
+        <div class="col-md-6 col-sm-10 col-lg-6 col-xl-6 res-fr-col">
+            <form asp-controller="home" asp-action="UserInsuranceCreate" method="POST">
+                <input type="hidden" name="InsuranceListId" value="@Model.Item2.InsuranceList.Id" />
+                @foreach (var item in Model.Item2.InsuranceList.Category.GroupsAndCategories)
+                {
+                    <input type="hidden" name="GroupsId" value="@item.Groups.Id" />
+                }
+                <div class="form-group">
+                    <label for="exampleFormControlInput1" class="i-label">İsim</label>
+                    <input asp-for="@Model.Item1.Firstname" type="text" class="form-control" id="">
+                    <span asp-validation-for="@Model.Item1.Firstname" class="val"></span>
+                </div>
+                <div class="form-group">
+                    <label for="exampleFormControlInput1" class="i-label">Soyisim</label>
+                    <input asp-for="@Model.Item1.Lastname" type="text" class="form-control" id="">
+                    <span asp-validation-for="@Model.Item1.Lastname" class="val"></span>
+
+                </div>
+                <div class="form-group">
+                    <label for="exampleFormControlInput1" class="i-label">Kimlik Numaranız</label>
+                    <input asp-for="@Model.Item1.TCKN" type="number" class="form-control" id="">
+                    <span asp-validation-for="@Model.Item1.TCKN" class="val"></span>
+
+                </div>
+                <div class="form-group">
+                    <label for="exampleFormControlInput1" class="i-label">Doğum Tarihiniz</label>
+                    <input asp-for="@Model.Item1.Birthday" type="date" class="form-control" id="">
+                    <span asp-validation-for="@Model.Item1.Birthday" class="val"></span>
+
+                </div>
+                <div class="form-group">
+                    <label for="exampleFormControlInput1" class="i-label">Email</label>
+                    <input asp-for="@Model.Item1.Email" type="email" class="form-control" id="">
+                    <span asp-validation-for="@Model.Item1.Email" class="val"></span>
+
+                </div>
+                <div class="form-group">
+                    <label for="exampleFormControlInput1" class="i-label">Telefon Numarası</label>
+                    <input asp-for="@Model.Item1.PhoneNumber" type="tel" class="form-control" id="" placeholder="05xxxxxxxxx">
+                    <span asp-validation-for="@Model.Item1.PhoneNumber" class="val"></span>
+
+                </div>
+                <button class="offer-btn" type="submit">Teklif Al</button>
+            </form>
+        </div>
+        <div class="col-md-6 col-sm-10 col-lg-6 col-xl-6">
+            <div class="card">
+                @foreach (var item in Model.Item2.InsuranceList.PageDescriptions)
+                {
+                    @Html.Raw(item.Description)
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<script>
+    (function ($) { // Begin jQuery
+        $(function () { // DOM ready
+            // If a link has a dropdown, add sub menu toggle.
+            $('nav ul li a:not(:only-child)').click(function (e) {
+                $(this).siblings('.nav-dropdown').toggle();
+                // Close one dropdown when selecting another
+                $('.nav-dropdown').not($(this).siblings()).hide();
+                e.stopPropagation();
+            });
+            // Clicking away from dropdown will remove the dropdown class
+            $('html').click(function () {
+                $('.nav-dropdown').hide();
+            });
+            // Toggle open and close nav styles on click
+            $('#nav-toggle').click(function () {
+                $('nav ul').slideToggle();
+            });
+            // Hamburger to X toggle
+            $('#nav-toggle').on('click', function () {
+                this.classList.toggle('active');
+            });
+        }); // end DOM ready
+    })(jQuery); // end jQuery
+</script>
+
