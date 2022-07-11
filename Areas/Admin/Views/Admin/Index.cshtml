@@ -1,0 +1,328 @@
+﻿@model Tuple<InsuranceProject.Areas.Admin.Model.IndexWM, InsuranceProject.Areas.Admin.Model.CategoryModel>
+
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_adminLayout.cshtml";
+}
+
+<script>
+    $(document).ready(function () {
+        $('#myTable').DataTable({
+            responsive: true,
+            language: {
+
+            },
+            "oLanguage": { "sSearch": "" },
+            "language": {
+                "searchPlaceholder": "Ara",
+                "paginate": {
+                    "next": '<i class="fa fa-fw fa-long-arrow-right">',
+                    "previous": '<i class="fa fa-fw fa-long-arrow-left">',
+
+                }
+            }
+        });
+    });
+
+</script>
+
+<div class="app-container app-theme-white body-tabs-shadow fixed-sidebar fixed-header">
+    <div class="app-header header-shadow" id="header">
+        <div class="app-header__logo">
+            <div class="logo-src"></div>
+            <div class="header__pane ml-auto">
+                <div>
+                    <button type="button" class="hamburger close-sidebar-btn hamburger--elastic" data-class="closed-sidebar">
+                        <span class="hamburger-box">
+                            <span class="hamburger-inner"></span>
+                        </span>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div class="app-header__mobile-menu">
+            <div>
+                <button type="button" class="hamburger hamburger--elastic mobile-toggle-nav">
+                    <span class="hamburger-box">
+                        <span class="hamburger-inner"></span>
+                    </span>
+                </button>
+            </div>
+        </div>
+        <div class="app-header__menu">
+            <span>
+                <button type="button" class="btn-icon btn-icon-only btn btn-primary btn-sm mobile-toggle-header-nav">
+                    <span class="btn-icon-wrapper">
+                        <i class="fa fa-ellipsis-v fa-w-6"></i>
+                    </span>
+                </button>
+            </span>
+        </div>    
+        <div class="app-header__content">
+            <div class="app-header-right">
+                <div class="header-btn-lg pr-0">
+                    <div class="widget-content p-0">
+                        <div class="widget-content-wrapper">
+                            <div class="widget-content-left">
+                                <div class="btn-group">
+                                    <a data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="p-0 btn">
+                                        <img width="42" class="rounded-circle" src="assets/images/avatars/1.jpg" alt="">
+                                        <i class="fa fa-angle-down ml-2 opacity-8"></i>
+                                    </a>
+                                    <div tabindex="-1" role="menu" aria-hidden="true" class="dropdown-menu dropdown-menu-right">
+                                        <button type="button" tabindex="0" class="dropdown-item">User Account</button>
+                                        <button type="button" tabindex="0" class="dropdown-item">Settings</button>
+                                        <h6 tabindex="-1" class="dropdown-header">Header</h6>
+                                        <button type="button" tabindex="0" class="dropdown-item">Actions</button>
+                                        <div tabindex="-1" class="dropdown-divider"></div>
+                                        <button type="button" tabindex="0" class="dropdown-item">Dividers</button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="widget-content-left  ml-3 header-user-info">
+                                <div class="widget-heading">
+                                    <span class="own">Gökhan Sarılar</span>
+                                </div>
+                                <div class="widget-subheading">
+                                    BMG Sigorta - CEO
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+          <div class="app-main">
+                      <div class="app-sidebar sidebar-shadow">
+                          <div class="scrollbar-sidebar">
+                              <div class="app-sidebar__inner">
+                                  <div class="group-dv">
+                                      <ul class="vertical-nav-menu">
+
+                                          <li class="app-sidebar__heading">Bireysel</li>
+                                          <li>
+                                              <a href="#" class="cat bg-dark">
+                                                  <i class="metismenu-icon pe-7s-diamond"></i>
+                                                  <span class="ct"> Kategoriler</span>
+                                                  <i class="metismenu-state-icon pe-7s-angle-down caret-left"></i>
+                                              </a>
+
+                                              <ul>
+                                                  <li>
+                                                      <a asp-area="Admin" asp-controller="Category" asp-action="Index" asp-route-name="@Model.Item1.IndividualGroup.GroupName" class="new-cat">
+                                                          <span class="nw-ct">
+                                                              Kategorileri Düzenle
+                                                          </span>
+                                                      </a>
+                                                  </li>
+                                                  @foreach (var item in Model.Item1.CategoriesAndInsuranceList)
+                                                  {
+                                                      <li>
+                                                          <a class="cat-name">
+                                                              <i class="metismenu-icon pe-7s-diamond"></i>
+                                                                  <span class="cat-n"> @item.Name</span>
+                                                              <i class="metismenu-state-icon pe-7s-angle-down caret-left"></i>
+                                                          </a>
+                                                          <ul class="cat-ul">
+                                                              <li class="cat-li">
+                                                                  <a class="add-pol" asp-area="Admin" asp-controller="Admin" asp-action="CreateInsurance" asp-route-name="@item.Name">
+                                                                      <span>Poliçe Ekle </span>
+                                                                  </a>
+                                                              </li>
+                                                              @foreach (var items in item.InsuranceListName)
+                                                              {
+                                                                  <li class="cat-li">
+                                                                      <a asp-controller="Admin" asp-action="InsurancePolicy" asp-route-url="@items.Url">
+                                                                          <span>@items.Name</span>
+                                                                      </a>
+                                                                  </li>
+                                                              }
+                                                          </ul>
+                                                      </li>
+
+
+                                                  }
+                                              </ul>
+                                          </li>
+                                          <div class="cat-bor"></div>
+                                          <li class="app-sidebar__heading">Kurumsal</li>
+                                          <li>
+                                              <a class="cat bg-dark">
+                                                  <i class="metismenu-icon pe-7s-diamond"></i>
+                                                  <span class="ct"> Kategoriler</span>
+                                                  <i class="metismenu-state-icon pe-7s-angle-down caret-left"></i>
+                                              </a>
+
+                                              <ul>
+                                                  <li>
+                                                      <a asp-area="Admin" asp-controller="Category" asp-action="Index" asp-route-name="@Model.Item1.CorporateGroup.GroupName" class="new-cat">
+                                                          <span class="nw-ct">
+                                                              Kategorileri Düzenle
+                                                          </span>
+                                                      </a>
+                                                  </li>
+                                                  @foreach (var item in Model.Item1.CorporatecategoryGroups)
+                                                  {
+                                                      <li>
+                                                          <a class="cat-name">
+                                                              <i class="metismenu-icon pe-7s-diamond"></i>
+                                                              <span class="cat-n"> @item.Name</span>
+                                                              <i class="metismenu-state-icon pe-7s-angle-down caret-left"></i>
+                                                          </a>
+                                                          <ul>
+                                                              <li class="cat-li">
+                                                                  <a class="add-pol" asp-area="Admin" asp-controller="Admin" asp-action="CreateInsurance" asp-route-name="@item.Name">
+                                                                      <span>Poliçe Ekle </span>
+                                                                  </a>
+                                                              </li>
+                                                              @foreach (var items in item.InsuranceListName)
+                                                              {
+                                                                  <li class="cat-li">
+                                                                      <a asp-controller="Admin" asp-action="InsurancePolicy" asp-route-url="@items.Url">
+                                                                          <span>@items.Name</span>
+                                                                      </a>
+                                                                  </li>
+                                                              }
+                                                          </ul>
+                                                      </li>
+
+
+                                                  }
+                                              </ul>
+                                          </li>
+                                        
+                                      </ul>
+                                  </div>
+                                  <div class="log-gr">
+                                      <a href="/account/logout" class="log" id="lg">
+                                          <i class="fa-solid fa-arrow-right-from-bracket"></i>
+                                          Çıkış Yap
+                                      </a>
+                                  </div>
+                              </div>
+                          </div>
+                      </div>   
+              
+           <div class="app-main__outer">
+            <div class="app-main__inner">
+                <div class="app-page-title" id="title">
+                    <div class="page-title-wrapper">
+                        <div class="page-title-heading">
+                            <div>
+                                <span class="dashboard-text"> Bmg Sigorta Yönetim Sayfası</span>
+                            </div>
+                        </div>
+                       
+                    </div>
+                </div> 
+                
+                <div class="row new-group-row">
+                    <div class="col-md-6 col-xl-4 inf">
+                        <a href="#">
+                            <div class="mb-3 widget-content bg-color">
+                                <div class="widget-content-wrapper text-white">
+                                    <div class="widget-content-left">
+                                        <div class="widget-heading">Müşteriler</div>
+                                    </div>
+                                    <div class="widget-content-right">
+                                        <div class="widget-numbers text-white"><span>(@ViewBag.AllUserCount)</span></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="col-md-6 col-xl-4 inf">
+                        <a asp-area="Admin" asp-controller="Category" asp-action="Index" asp-route-name="@Model.Item1.IndividualGroup.GroupName">
+                            <div class="mb-3 widget-content bg-color1">
+                                <div class="widget-content-wrapper">
+                                    <div class="widget-content-left">
+                                        <div class="widget-heading">Bireysel</div>
+                                    </div>
+                                    <div class="widget-content-right">
+                                        <div class="widget-numbers">
+                                            <span>(@ViewBag.IndividualUserCount)</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="col-md-6 col-xl-4 inf">
+                        <a asp-area="Admin" asp-controller="Category" asp-action="Index" asp-route-name="@Model.Item1.CorporateGroup.GroupName">
+                            <div class="mb-3 widget-content bg-color2">
+                                <div class="widget-content-wrapper text-white">
+                                    <div class="widget-content-left">
+                                        <div class="widget-heading">Kurumsal</div>
+                                    </div>
+                                    <div class="widget-content-right">
+                                        <div class="widget-numbers text-white">
+                                            <span>(@ViewBag.CorporateUserCount)</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                </div>  
+                
+                <div class="row all-info-row">
+                    <div class="col-md-11 col-lg-11">
+                        <div class="info-div">
+                            <h2 class="all-us">Tüm Kullanıcı Bilgileri</h2>
+                            <div class="buttons">
+                                <form asp-area="Admin" asp-controller="Admin" asp-action="ExportToExcellUsers" method="post">
+                                    <button class="btn btn-light " id="userId" type="submit">
+                                        <i class="fa-solid fa-file-arrow-down"></i>
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+                        <div class="table-responsive-sm table-responsive-md table-responsive-lg table-row">
+                            <table class="table table-striped table-hover" id="myTable">
+                                <thead class="bg-dark text-white">
+                                    <tr>
+                                        <th scope="col">İsim</th>
+                                        <th scope="col">Soy isim</th>
+                                        <th scope="col">Email</th>
+                                        <th scope="col">Kimlik No</th>
+                                        <th scope="col">Cep No</th>
+                                        <th scope="col">Tarih</th>
+                                        <th scope="col">Poliçe Adı</th>
+                                        <th scope="col">Grup</th>
+                                        <th scope="col"></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var user in Model.Item1.Users)
+                                    {
+                                        <tr>
+                                            <td>@user.Users.FirstName</td>
+                                            <td>@user.Users.LastName</td>
+                                            <td>@user.Users.Email</td>
+                                            <td>@user.Users.TCKN</td>
+                                            <td>@user.Users.PhoneNumber</td>
+                                            <td>@user.Users.Date.ToString("dddd, MMMM d, yyyy");</td>
+                                            <td>@user.Users.InsuranceList.Name</td>
+                                            <td>@user.Groups.Name</td>
+                                            <td></td>
+                                        </tr>
+
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+
+                    </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
