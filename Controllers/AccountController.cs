@@ -23,20 +23,21 @@ namespace InsuranceProject.Area.Admin.Controllers
         public IActionResult Login()
         {
             return View();
+            
         }
 
 
         [HttpPost]
         public async Task<IActionResult> Login(InsuranceProject.Context.Admin model)
         {
-            var admin = context.Admin.Where(i => i.KullanıcıAdı == model.KullanıcıAdı && i.Password == model.Password).FirstOrDefault();
+            var admin = context.Admin.Where(i => i.Email == model.Email && i.PasswordHash == model.PasswordHash).FirstOrDefault();
 
             if(admin != null)
             {
                 var claim = new List<Claim>
                 {
 
-                    new Claim(ClaimTypes.Name, model.KullanıcıAdı)
+                    new Claim(ClaimTypes.Email, model.Email)
 
                 };
 
@@ -61,6 +62,9 @@ namespace InsuranceProject.Area.Admin.Controllers
             await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
             return RedirectToAction("Login", "Account");
         }
+
+
+
 
 
 

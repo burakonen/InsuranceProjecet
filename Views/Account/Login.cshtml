@@ -13,11 +13,11 @@
             <form asp-controller="Account" asp-action="Login" class="login">
                 <div class="login__field">
                     <i class="login__icon fas fa-user"></i>
-                    <input asp-for="@Model.KullanıcıAdı" type="text" class="login__input" placeholder="Kullanıcı Adı">
+                    <input asp-for="@Model.Email" type="text" class="login__input" placeholder="Email">
                 </div>
                 <div class="login__field">
                     <i class="login__icon fas fa-lock"></i>
-                    <input asp-for="@Model.Password" type="password" class="login__input" placeholder="Şifre">
+                    <input asp-for="@Model.PasswordHash" type="password" class="login__input" placeholder="Şifre">
                 </div>
                 <button type="submit" class="button login__submit">
                     <span class="button__text mr-1">Giriş Yap</span>

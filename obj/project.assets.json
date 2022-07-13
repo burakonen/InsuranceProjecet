@@ -9524,11 +9524,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\lenovo\\source\\repos\\InsuranceProject\\InsuranceProject\\InsuranceProject.csproj",
-      "projectName": "InsuranceProject",
-      "projectPath": "C:\\Users\\lenovo\\source\\repos\\InsuranceProject\\InsuranceProject\\InsuranceProject.csproj",
+      "projectUniqueName": "D:\\Git\\InsuranceProject\\InsuranceProjectApp1\\InsuranceProjectApp.csproj",
+      "projectName": "InsuranceProjectApp",
+      "projectPath": "D:\\Git\\InsuranceProject\\InsuranceProjectApp1\\InsuranceProjectApp.csproj",
       "packagesPath": "C:\\Users\\lenovo\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\lenovo\\source\\repos\\InsuranceProject\\InsuranceProject\\obj\\",
+      "outputPath": "D:\\Git\\InsuranceProject\\InsuranceProjectApp1\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\lenovo\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -9612,7 +9612,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.405\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.301\\RuntimeIdentifierGraph.json"
       }
     }
   }

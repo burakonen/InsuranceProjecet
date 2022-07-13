@@ -1,6 +1,7 @@
 ﻿using InsuranceProject.Context;
 using InsuranceProject.Models;
 using InsuranceProject.Models.ViewModel;
+using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -27,6 +28,14 @@ namespace InsuranceProject.Areas.Admin.Model
         public int AllCustomerCount { get; set; }
         public List<GroupsAndCategories> IndividiualCount { get; set; }
         public int CorporateCount { get; set; }
+
+
+        [Required(ErrorMessage = "Email zorunlu bir alan")]
+        public string Email { get; set; }
+
+        [Required(ErrorMessage = "Şifre zorunlu bir alan")]
+        public string Password { get; set; }
+        public string Image { get; set; }
 
 
 

@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\lenovo\\source\\repos\\InsuranceProject\\InsuranceProject\\InsuranceProject.csproj": {}
+    "D:\\Git\\InsuranceProject\\InsuranceProjectApp1\\InsuranceProject.csproj": {}
   },
   "projects": {
-    "C:\\Users\\lenovo\\source\\repos\\InsuranceProject\\InsuranceProject\\InsuranceProject.csproj": {
+    "D:\\Git\\InsuranceProject\\InsuranceProjectApp1\\InsuranceProject.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\lenovo\\source\\repos\\InsuranceProject\\InsuranceProject\\InsuranceProject.csproj",
+        "projectUniqueName": "D:\\Git\\InsuranceProject\\InsuranceProjectApp1\\InsuranceProject.csproj",
         "projectName": "InsuranceProject",
-        "projectPath": "C:\\Users\\lenovo\\source\\repos\\InsuranceProject\\InsuranceProject\\InsuranceProject.csproj",
+        "projectPath": "D:\\Git\\InsuranceProject\\InsuranceProjectApp1\\InsuranceProject.csproj",
         "packagesPath": "C:\\Users\\lenovo\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\lenovo\\source\\repos\\InsuranceProject\\InsuranceProject\\obj\\",
+        "outputPath": "D:\\Git\\InsuranceProject\\InsuranceProjectApp1\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\lenovo\\AppData\\Roaming\\NuGet\\NuGet.Config",

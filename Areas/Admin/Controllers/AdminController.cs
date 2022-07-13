@@ -57,7 +57,7 @@ namespace InsuranceProject.Area.Admin.Controllers
 
         [HttpGet]
         [Route("admin/ana-sayfa")]
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
             
             var individualcategoryGroups = _getAllCategories.GetCategories();
@@ -69,6 +69,7 @@ namespace InsuranceProject.Area.Admin.Controllers
             ViewBag.AllUserCount = context.GroupsAndUsers.Include(i => i.Users).Count();
             ViewBag.IndividualUserCount = context.GroupsAndUsers.Where(a => a.Groups.Name == "BİREYSEL").Include(i => i.Users).Count();
             ViewBag.CorporateUserCount = context.GroupsAndUsers.Where(a => a.Groups.Name == "KURUMSAL").Include(i => i.Users).Count();
+            var admin = await context.Admin.FirstAsync();
 
             return View(Tuple.Create<IndexWM, CategoryModel>(new IndexWM(){   
                 IndividualGroup = individualGroupName,
@@ -76,7 +77,9 @@ namespace InsuranceProject.Area.Admin.Controllers
                 CategoriesAndInsuranceList = individualcategoryGroups,
                 CorporatecategoryGroups = CorporatecategoryGroups,
                 Users = GetAllUsers,
-              
+                Email = admin.Email,
+                Password = admin.PasswordHash,
+                Image = admin.Image
             }, 
             new CategoryModel()));
         }
@@ -785,6 +788,35 @@ namespace InsuranceProject.Area.Admin.Controllers
             }
 
         }
+
+
+
+        [HttpPost]
+        public async Task<IActionResult> EditSettings([Bind(Prefix ="Item1")] IndexWM model, IFormFile file)
+        {
+            if(ModelState.IsValid)
+            {
+                var admin = await context.Admin.FirstAsync();
+                admin.Email = model.Email;
+                admin.PasswordHash = model.Password;
+
+                if(file != null)
+                {
+                    var random = new Random();
+                    var extension = Path.GetExtension(file.FileName);
+                    var newImageName = "Image" + random.ToString() + extension;
+                    var location = Path.Combine("wwwroot/img/adminImage", newImageName);
+                    var stream = new FileStream(location, FileMode.Create);
+                    file.CopyTo(stream);
+
+                    admin.Image = "img/adminImage/" + newImageName;
+                }
+                await context.SaveChangesAsync();
+                return RedirectToAction("Index");
+            }
+            return View(model);
+        }
+
 
     }
 }
