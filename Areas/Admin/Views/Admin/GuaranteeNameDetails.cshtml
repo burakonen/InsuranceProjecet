@@ -9,7 +9,7 @@
 
 
 <script>
-    $(document).ready(function () {
+    $(document).ready(function() {
         $('#myTable').DataTable({
             language: {
 
@@ -59,7 +59,7 @@
                     </span>
                 </button>
             </span>
-        </div>    
+        </div>
         <div class="app-header__content">
             <div class="app-header-right">
                 <div class="header-btn-lg pr-0">
@@ -67,9 +67,6 @@
                         <div class="widget-content-wrapper">
                             <div class="widget-content-left">
                                 <div class="btn-group">
-                                    <a data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="p-0 btn">
-                                        <i class="fa fa-angle-down ml-2 opacity-8"></i>
-                                    </a>
                                     <div tabindex="-1" role="menu" aria-hidden="true" class="dropdown-menu dropdown-menu-right">
                                         <button type="button" tabindex="0" class="dropdown-item">User Account</button>
                                         <button type="button" tabindex="0" class="dropdown-item">Settings</button>
@@ -81,18 +78,67 @@
                                 </div>
 
                             </div>
+
                             <div class="widget-content-left  ml-3 header-user-info">
-                                <div class="widget-heading">
-                                    <span class="own">Gökhan Sarılar</span>
-                                </div>
-                                <div class="widget-subheading">
-                                    BMG Sigorta - CEO
-                                </div>
-                            </div>
-                            <div class="widget-content-right header-user-info ml-3">
-                                <button type="button" class="btn-shadow p-1 btn btn-primary btn-sm show-toastr-example">
-                                    <i class="fa text-white fa-calendar pr-1 pl-1"></i>
+                                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#settingsModal">
+                                    <div class="settings-image-group">
+                                        <img src="~/@Model.Item1.Image" class="settings-image" alt="">
+                                    </div>
+                                    <div class="button-grps">
+                                        <div class="widget-heading">
+                                            <span class="own">Gökhan Sarılar</span>
+                                        </div>
+                                        <div class="widget-subheading">
+                                            BMG Sigorta - CEO
+                                        </div>
+                                    </div>
                                 </button>
+                            </div>
+                             @*settingsModal*@
+                            <div class="modal fade" id="settingsModal" data-backdrop="false" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="exampleModalLabel">Ayarlar</h5>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                    
+                                        <div class="modal-body" id="form-modal-body">
+                                            <form asp-area="admin" asp-controller="Admin" asp-action="EditSettings" method="post" enctype="multipart/form-data">
+                                                <div class="form-group">
+                               
+                                                    <div class="avatar-upload">
+                                                        <div class="avatar-edit">
+                                                            <input type='file' name="file" id="imageUpload" accept=".png, .jpg, .jpeg" onchange="previewFile()"/>
+                                                            <label for="imageUpload"><i class="fa-solid fa-pencil"></i></label>
+                                                        </div>
+                                                        <div class="avatar-preview">
+                                                            <img id="imagePreview" src="~/@Model.Item1.Image">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="label-g" for="exampleInputEmail1">Email</label>
+                                                    <input class="form-control" asp-for="@Model.Item1.Email">
+                                                    <span class="validation" asp-validation-for="Item1.Email"></span>
+                                                    <small id="emailHelp" class="form-text text-muted"></small>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="label-g" for="exampleInputPassword1">Şifre</label>
+                                                    <input class="form-control" asp-for="@Model.Item1.Password">
+                                                    <span class="validation" asp-validation-for="Item1.Password"></span>
+                                                </div>
+                                                <div class="btns">
+                                                    <button type="submit" class="btn btn-dark">Kaydet</button>
+                                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Kapat</button>
+                                                </div>
+                                            </form>
+
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -224,7 +270,7 @@
                             @foreach (var item in Model.Item2.Guarantees)
                             {
                                 <div class="d-flex justify-content-between">
-                                    <span class="dashboard-text">@item.Name Teminat Düzenleme Sayfası</span>
+                                    <span class="dashboard-text">@item.Name Düzenleme Sayfası</span>
                                 </div>
                             }
                         </div>
@@ -260,7 +306,10 @@
                                                     <div class="form-group">
                                                         <label class="label-g" for="exampleInputEmail1">Teminat Açıklaması</label>
                                                         <small id="emailHelp" class="form-text text-muted sml">Teminatlar için ek açıklama alanıdır. Zorunlu bir alan değildir.</small>
-                                                        <textarea asp-for="@Model.Item2.Descriptions" class="form-control modal-textarea" rows="5"></textarea>
+                                                        <textarea class="ckeditor" id="ckeditor1"></textarea>
+
+                                                     
+            
                                                     </div>
 
                                                     <div class="btns">
@@ -302,7 +351,7 @@
 
                                                     <div class="btns">
                                                         <button type="submit" id="btnSubmit" class="btn btn-dark">Kaydet</button>
-                                                        <button type="button" class="btn btn-dark" data-dismiss="modal">Kapat</button>
+                                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Kapat</button>
                                                     </div>
                                                 </form>
 
@@ -318,9 +367,9 @@
                             <table class="table table-striped table-sm" id="myTable">
                                 <thead class="bg-dark text-white">
                                     <tr>
-                                        <th scope="col" style='width: 35%;'>Teminat İsmi</th>
-                                        <th scope="col" style='width: 30%;'>Poliçe Adı</th>
-                                        <th scope="col" style='width: 20%;'>Eklenme Tarihi</th>
+                                        <th scope="col">Teminat İsmi</th>
+                                        <th scope="col">Poliçe Adı</th>
+                                        <th scope="col">Eklenme Tarihi</th>
                                         <th></th>
                                     </tr>
                                 </thead>
@@ -358,10 +407,11 @@
 </div>
 
 
-
+<script src="~/lib/ckeditor/ckeditor.js"></script>
+<script src="~/lib/ckeditor/config.js"></script>
 
 <script>
-    $(document).on("click", "#guaranteeeId", function () {
+    $(document).on("click", "#guaranteeeId", function() {
         var passedID = $(this).data('id');
         $(".modal-body .guarantee").val(passedID);
         console.log(passedID);
@@ -381,8 +431,8 @@
 
 <script type="text/javascript">
 
-    $(function () {
-        $("tbody").on("click", "#guaranteeeId", function () {
+    $(function() {
+        $("tbody").on("click", "#guaranteeeId", function() {
 
             let btn = $(this);
             let id = btn.data("id");
@@ -392,7 +442,7 @@
                 type: "GET",
                 dataType: "json",
                 url: "/admin/admin/getguaranteename/" + id,
-                success: function (data) {
+                success: function(data) {
                     let parseData = JSON.parse(data);
                     console.log(parseData);
 
@@ -422,17 +472,17 @@
 <script>
 
 
-    $(function () {
-        $("tbody").on("click", "#deleteGuaranteeNameId", function () {
+    $(function() {
+        $("tbody").on("click", "#deleteGuaranteeNameId", function() {
             var btn = $(this);
-            bootbox.confirm("<h5>Silmek istediğinize emin misiniz?</h5>", function (result) {
+            bootbox.confirm("<h5>Silmek istediğinize emin misiniz?</h5>", function(result) {
                 if (result) {
                     var id = btn.data("id");
                     console.log(id);
                     $.ajax({
                         type: "POST",
                         url: "/Admin/Admin/deleteguaranteename/" + id,
-                        success: function () {
+                        success: function() {
                             btn.parent().parent().remove();
 
                         },
@@ -454,8 +504,8 @@
 
 <script type="text/javascript">
 
-    $(function () {
-        $("tbody").on("click", "#guaranteeeId", function () {
+    $(function() {
+        $("tbody").on("click", "#guaranteeeId", function() {
 
             let btn = $(this);
             let id = btn.data("id");
@@ -463,7 +513,7 @@
                 type: "GET",
                 dataType: "json",
                 url: "/admin/admin/getguarantee/" + id,
-                success: function (data) {
+                success: function(data) {
                     let parseData = JSON.parse(data);
                     console.log(parseData);
 

@@ -46,7 +46,7 @@ namespace InsuranceProject.Areas.Admin.Controllers
 
         [HttpGet]
         [Route("/admin/{name}/kategori/ana-sayfa")]
-        public IActionResult Index(string name)
+        public async Task<IActionResult> Index(string name)
         {
 
             if(name == null)
@@ -69,11 +69,19 @@ namespace InsuranceProject.Areas.Admin.Controllers
 
             var individualGroupName = _getGroupNames.GetIndividiaulGroupName();
             var corporateGroupName = _getGroupNames.GetCorporateGroupName();
-
             var individualcategoryGroups = _getAllCategories.GetCategories();
             var CorporatecategoryGroups = _getAllCategories.GetCorporateCategorie();
+            var admin = await context.Admin.FirstAsync();
 
-            return View(Tuple.Create<IndexWM, CategoryModel>(new IndexWM() { IndividualGroup = individualGroupName, CorporateGroup = corporateGroupName, CategoriesByGroup = categories, CategoriesAndInsuranceList = individualcategoryGroups, CorporatecategoryGroups = CorporatecategoryGroups, }, new CategoryModel()));
+            return View(Tuple.Create<IndexWM, CategoryModel>(new IndexWM() {
+                Email = admin.Email,
+                Password = admin.PasswordHash,
+                Image = admin.Image,
+                IndividualGroup = individualGroupName, 
+                CorporateGroup = corporateGroupName, 
+                CategoriesByGroup = categories, 
+                CategoriesAndInsuranceList = individualcategoryGroups, 
+                CorporatecategoryGroups = CorporatecategoryGroups, }, new CategoryModel()));
         }
 
 
@@ -120,7 +128,7 @@ namespace InsuranceProject.Areas.Admin.Controllers
 
 
         [Route("/admin/{name}/kategori/kategori-detay")]
-        public IActionResult CategoryDetails(string name)
+        public async Task<IActionResult> CategoryDetails(string name)
         {
             if (name == null)
             {
@@ -129,17 +137,16 @@ namespace InsuranceProject.Areas.Admin.Controllers
 
             var individualGroupName = _getGroupNames.GetIndividiaulGroupName();
             var corporateGroupName = _getGroupNames.GetCorporateGroupName();
-
             var categoriesAndInsuruncaList = context.Categories.Where(i => i.Name == name).Include(i => i.InsuranceList).ToList();
             var categoryName = context.Categories.Where(i => i.Name == name).Select(s => new SelectCategoryName() { Name = s.Name }).FirstOrDefault();
-
-
-
             var individualcategoryGroups = _getAllCategories.GetCategories();
             var CorporatecategoryGroups = _getAllCategories.GetCorporateCategorie();
-
+            var admin = await context.Admin.FirstAsync();
             return View(Tuple.Create<IndexWM, CategoryModel, InsuranceNameEditModel>(new IndexWM()
-            { 
+            {
+                Email = admin.Email,
+                Password = admin.PasswordHash,
+                Image = admin.Image,
                 CategoryName = categoryName, 
                 CategoriesInsurunceList = categoriesAndInsuruncaList,
                 IndividualGroup = individualGroupName,

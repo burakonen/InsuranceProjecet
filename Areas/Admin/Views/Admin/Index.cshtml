@@ -67,9 +67,9 @@
                             <div class="widget-content-left">
                                 <div class="btn-group">
                                     <!-- Button trigger modal -->
-                                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#settingsModal">
+                                   @* <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#settingsModal">
                                         <i class="fa fa-angle-down ml-2 opacity-8"></i>
-                                    </button>
+                                    </button>*@
                                     <div tabindex="-1" role="menu" aria-hidden="true" class="dropdown-menu dropdown-menu-right">
                                         <button type="button" tabindex="0" class="dropdown-item">User Account</button>
                                         <button type="button" tabindex="0" class="dropdown-item">Settings</button>
@@ -80,19 +80,21 @@
                                     </div>
                                 </div>
                             </div>
-                       
-                            <div class="settings-image-group">
-                                <img src="~/@Model.Item1.Image" class="settings-image" alt="">
-                            </div>
                             <div class="widget-content-left  ml-3 header-user-info">
-                                <div class="widget-heading">
-                                    <span class="own">Gökhan Sarılar</span>
-                                </div>
-                                <div class="widget-subheading">
-                                    BMG Sigorta - CEO
-                                </div>
+                                 <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#settingsModal">
+                                        <div class="settings-image-group">
+                                            <img src="~/@Model.Item1.Image" class="settings-image" alt="">
+                                        </div>
+                                        <div class="button-grps">
+                                             <div class="widget-heading">
+                                                    <span class="own">Gökhan Sarılar</span>
+                                             </div>
+                                             <div class="widget-subheading">
+                                                    BMG Sigorta - CEO
+                                             </div>
+                                        </div>
+                                 </button>
                             </div>
-                       
                         </div>
                     </div>
                 </div>
@@ -145,6 +147,8 @@
                 </div>
             </div>
         </div>
+   
+    
     </div>
     <div class="app-main">
         <div class="app-sidebar sidebar-shadow">
@@ -271,12 +275,12 @@
                 </div>
 
                 <div class="row new-group-row">
-                    <div class="col-md-6 col-xl-4 inf">
+                    <div class="col-md-6 col-xl-3 inf">
                         <a href="#">
                             <div class="mb-3 widget-content bg-color">
                                 <div class="widget-content-wrapper text-white">
                                     <div class="widget-content-left">
-                                        <div class="widget-heading">Müşteriler</div>
+                                        <span class="widget-heading-text">Müşteriler</span>
                                     </div>
                                     <div class="widget-content-right">
                                         <div class="widget-numbers text-white"><span>(@ViewBag.AllUserCount)</span></div>
@@ -285,12 +289,12 @@
                             </div>
                         </a>
                     </div>
-                    <div class="col-md-6 col-xl-4 inf">
+                    <div class="col-md-6 col-xl-3 inf">
                         <a asp-area="Admin" asp-controller="Category" asp-action="Index" asp-route-name="@Model.Item1.IndividualGroup.GroupName">
                             <div class="mb-3 widget-content bg-color1">
                                 <div class="widget-content-wrapper">
                                     <div class="widget-content-left">
-                                        <div class="widget-heading">Bireysel</div>
+                                        <span class="widget-heading-text">Bireysel</span>
                                     </div>
                                     <div class="widget-content-right">
                                         <div class="widget-numbers">
@@ -301,12 +305,12 @@
                             </div>
                         </a>
                     </div>
-                    <div class="col-md-6 col-xl-4 inf">
+                    <div class="col-md-6 col-xl-3 inf">
                         <a asp-area="Admin" asp-controller="Category" asp-action="Index" asp-route-name="@Model.Item1.CorporateGroup.GroupName">
                             <div class="mb-3 widget-content bg-color2">
                                 <div class="widget-content-wrapper text-white">
                                     <div class="widget-content-left">
-                                        <div class="widget-heading">Kurumsal</div>
+                                        <span class="widget-heading-text">Kurumsal</span>
                                     </div>
                                     <div class="widget-content-right">
                                         <div class="widget-numbers text-white">
@@ -335,15 +339,14 @@
                             <table class="table table-striped table-hover" id="myTable">
                                 <thead class="bg-dark text-white">
                                     <tr>
-                                        <th scope="col">İsim</th>
-                                        <th scope="col">Soy isim</th>
-                                        <th scope="col">Email</th>
-                                        <th scope="col">Kimlik No</th>
-                                        <th scope="col">Cep No</th>
-                                        <th scope="col">Tarih</th>
-                                        <th scope="col">Poliçe Adı</th>
-                                        <th scope="col">Grup</th>
-                                        <th scope="col"></th>
+                                        <th>İsim</th>
+                                        <th style="width:10%">Soy isim</th>
+                                        <th>Email</th>
+                                        <th>Kimlik No</th>
+                                        <th>Cep No</th>
+                                        <th>Tarih</th>
+                                        <th>Poliçe Adı</th>
+                                        <th>Grup</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -358,7 +361,6 @@
                                             <td>@user.Users.Date.ToString("dddd, MMMM d, yyyy");</td>
                                             <td>@user.Users.InsuranceList.Name</td>
                                             <td>@user.Groups.Name</td>
-                                            <td></td>
                                         </tr>
 
                                     }

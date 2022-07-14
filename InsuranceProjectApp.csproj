@@ -2,9 +2,11 @@
 
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
+    <UserSecretsId>e520fab6-3e7e-4af2-9128-3cf7fd3d67d9</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="CKEditor" Version="3.6.4" />
     <PackageReference Include="ClosedXML" Version="0.95.4" />
     <PackageReference Include="EPPlus" Version="6.0.5" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="5.0.17" />
@@ -23,6 +25,12 @@
 
   <ItemGroup>
     <Folder Include="wwwroot\img\newinsuranceimage\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Update="wwwroot\lib\ckeditor\build-config.js">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
 
 </Project>

@@ -79,18 +79,66 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="widget-content-left  ml-3 header-user-info">
-                                <div class="widget-heading">
-                                    <span class="own">Gökhan Sarılar</span>
-                                </div>
-                                <div class="widget-subheading">
-                                    BMG Sigorta - CEO
-                                </div>
+                            <div class="widget-content-left ml-3 header-user-info">
+                                 <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#settingsModal">
+                                        <div class="settings-image-group">
+                                            <img src="~/@Model.Item1.Image" class="settings-image" alt="">
+                                        </div>
+                                        <div class="button-grps">
+                                             <div class="widget-heading">
+                                                    <span class="own">Gökhan Sarılar</span>
+                                             </div>
+                                             <div class="widget-subheading">
+                                                    BMG Sigorta - CEO
+                                             </div>
+                                        </div>
+                                 </button>
                             </div>
-                            <div class="widget-content-right header-user-info ml-3">
-                                <button type="button" class="btn-shadow p-1 btn btn-primary btn-sm show-toastr-example">
-                                    <i class="fa text-white fa-calendar pr-1 pl-1"></i>
-                                </button>
+                             @*settingsModal*@
+                            <div class="modal fade" id="settingsModal" data-backdrop="false" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="exampleModalLabel">Ayarlar</h5>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+
+                                        <div class="modal-body" id="form-modal-body">
+                                            <form asp-area="admin" asp-controller="Admin" asp-action="EditSettings" method="post" enctype="multipart/form-data">
+                                                <div class="form-group">
+
+                                                    <div class="avatar-upload">
+                                                        <div class="avatar-edit">
+                                                            <input type='file' name="file" id="imageUpload" accept=".png, .jpg, .jpeg" onchange="previewFile()" />
+                                                            <label for="imageUpload"><i class="fa-solid fa-pencil"></i></label>
+                                                        </div>
+                                                        <div class="avatar-preview">
+                                                            <img id="imagePreview" src="~/@Model.Item1.Image">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="label-g" for="exampleInputEmail1">Email</label>
+                                                    <input class="form-control" asp-for="@Model.Item1.Email">
+                                                    <span class="validation" asp-validation-for="Item1.Email"></span>
+                                                    <small id="emailHelp" class="form-text text-muted"></small>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="label-g" for="exampleInputPassword1">Şifre</label>
+                                                    <input class="form-control" asp-for="@Model.Item1.Password">
+                                                    <span class="validation" asp-validation-for="Item1.Password"></span>
+                                                </div>
+                                                <div class="btns">
+                                                    <button type="submit" class="btn btn-dark">Kaydet</button>
+                                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Kapat</button>
+                                                </div>
+                                            </form>
+
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -173,7 +221,7 @@
                                                 @foreach (var items in item.InsuranceListName)
                                                 {
                                                     <li class="cat-li">
-                                                        <a class="add-pol" asp-area="Admin" asp-controller="Admin" asp-action="InsurancePolicy" asp-route-name="@items.Name">
+                                                        <a class="add-pol" asp-area="Admin" asp-controller="Admin" asp-action="InsurancePolicy" asp-route-url="@items.Url">
                                                             <span>@items.Name</span>
                                                         </a>
                                                     </li>
@@ -310,7 +358,7 @@
                                                   <tr>
                                                       <td>@items.Id</td>
                                                       <td>@items.Name</td>
-                                                      <td>@items.Date</td>
+                                                      <td>@items.Date.ToString("dddd, MMMM d, yyyy");</td>
                                                       <td>@items.Category.Name</td>
                                                       <td class="t-t">
                                                           <a asp-area="Admin" asp-controller="Admin" asp-action="InsurancePolicy" asp-route-url="@items.SEOURL" class="btn btn-dark all-button" type="button" id="">Görüntüle</a>

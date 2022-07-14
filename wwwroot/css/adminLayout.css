@@ -3,28 +3,31 @@
 }
 .app-sidebar__heading {
     color: #526570 !important;
-    
+    font-size:15px;
+    font-weight:500;
 }
 
 .vertical-nav-menu li a {
-    color:gray;
-    font-size:14px;
+    color: gray;
+    font-size: 14px;
 }
 
 .logo img{
     width:100px;
     
 }
+
 .sidebar-shadow {
     background-color: rgba(247, 245, 245) !important;
-    width:300px !important;
+    box-shadow:none !important;
 }
 
 .app-sidebar__inner {
     display: flex;
     flex-direction: column;
     height: 100vh;
-
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    border-right:1px solid white;
 }
 #lg{
     text-decoration:none;
@@ -32,6 +35,7 @@
 #lg:hover{
     color:white;
 }
+
 .log:hover {
     background-color: rgba(203, 209, 204);
     transition: 2s;
@@ -114,22 +118,20 @@
 }
 
 
-#title {
-    background-color: rgba(245, 244, 242);
-}
-
-
 .app-main__outer {
-    background-color: rgba(245, 244, 242);
-    
+    background-color: rgba(247, 245, 245) !important;
+    box-shadow:none !important
+
 }
 .inf {
     padding: 0;
     height: 120px;
-    box-shadow: rgba(0, 0, 0, 0.09) 0px 2px 1px, rgba(0, 0, 0, 0.09) 0px 4px 2px, rgba(0, 0, 0, 0.09) 0px 8px 4px, rgba(0, 0, 0, 0.09) 0px 16px 8px, rgba(0, 0, 0, 0.09) 0px 32px 16px;
     display: flex;
+    cursor:pointer;
     align-items: center;
+    border:1px solid white !important;
     justify-content: center;
+    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
 }
 
 .inf:hover{
@@ -154,7 +156,8 @@
     margin-bottom:50px !important;
 }
 .widget-numbers span{
-    color:dimgrey !important;
+    color:black;
+    font-weight:bold;
 }
 .new-group-row {
     display: flex;
@@ -169,7 +172,8 @@
 
 .dashboard-text {
     font-weight: bold;
-    font-size: 25px;
+    color: black;
+    font-size: 35px;
 }
 .card-header-tab {
     background-color: rgba(250, 251, 252);
@@ -192,17 +196,29 @@
 
 
 .widget-heading{
-    font-weight:bold;
     margin-right:10px;
-    color:dimgray;
-    font-size:20px;
+    color:black;
+    font-size:22px;
 }
-.inf a{
-    text-decoration:none;
+.widget-heading-text{
+    font-size:20px;
+    color:black;
+    font-weight:500;
+    margin-right:4px;
+}
+.inf a {
+    text-decoration: none;
 }
 .own{
     color:black;
     font-size:17px;
+}
+.widget-subheading{
+    color:black;
+    font-size:13px;
+    font-weight:500;
+    position:relative;
+    right:6px;
 }
 
 .cat-li {
@@ -210,9 +226,17 @@
     cursor: pointer;
     width: 184px;
     box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
-    border-radius:4px;
-    margin-bottom:10px;
+    border-radius: 4px;
+    margin-bottom: 10px;
 }
+.cat-li a:hover{
+    background-color: #343a40 !important;
+    color:white !important;
+}
+.cat-li a:hover span{
+    color:white !important;
+}
+
 .add-pol {
     background-color: rgba(184, 186, 184);
     display: flex;
@@ -240,6 +264,15 @@
     margin: 5px !important;
     cursor:pointer;
 }
+.cat-name:hover{
+    background-color: #343a40 !important;
+    color:white !important;
+}
+
+.cat-name:hover span{
+    color:white !important;
+}
+
 
 .cat-bor {
     border: 1px solid gainsboro;
@@ -266,7 +299,9 @@
     box-shadow: rgba(0, 0, 0, 0.15) 0px 3px 3px 0px;
     cursor:pointer;
 }
-
+.new-cat:hover {
+    background-color: #343a40 !important
+}
 .nw-ct {
     font-size: 11px;
     color: white;
@@ -291,8 +326,10 @@
 }
 #myTable tbody tr td {
     font-size: 14px;
-    padding:17px;
-    font-weight: 400;
+    padding:10px;
+    font-weight: 500;
+    text-align:left;
+    border:1px solid white;
 }
 
 .dataTables_length, .dataTables_length select {
@@ -476,11 +513,12 @@ dataTables_length, .dataTables_filter, .dataTables_info {
 .fieldlabels{
     font-size:12px;
 }
-
+.header-user-info button:focus{
+    background-color:transparent !important;
+}
 .t-t {
     display: flex;
     justify-content: end;
-    width: 80%;
 }
 
 .t-td {
@@ -488,18 +526,9 @@ dataTables_length, .dataTables_filter, .dataTables_info {
     font-weight:600 !important;
     color:black;
 }
-#myTable thead tr th {
-    text-align: left;
-    border: none;
-}
-
-table thead tr th{
-    height:1px !important;
-}
-
-#myTable tbody tr td {
-    text-align: left;
-    border:none !important;
+#myTable thead tr th{
+    padding:10px;
+    text-align:left;
 }
 
 content {
@@ -602,11 +631,12 @@ content {
 }
 .app-page-title {
     display: flex;
-    margin:0;
     width:92%;
+    padding:0;
+    margin-top:10px;
     margin-left:auto;
     margin-right:auto;
-    box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
+    background-color:transparent !important;
 }
 .all-info-row {
     margin-top: 100px;
@@ -775,8 +805,7 @@ input:focus{
 }
 .validation{
     color:red;
-    font-size:11px;
-    text-align:left;
+    font-size:12px;
 }
 .sml{
     font-size:10px;
@@ -871,9 +900,10 @@ input:focus{
   background-position: center;
 }
 .widget-content-wrapper{
-    width:300px;
     display:flex;
+    align-items:center;
 }
+
 .btn-group .btn-primary {
     background-color: transparent !important;
     color:black;
@@ -886,8 +916,9 @@ input:focus{
 
 }
 .settings-image-group {
-    width: 50px;
-    height: 50px;
+    width: 45px;
+    height: 45px;
+    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
     margin-left: 10px;
     border-radius: 50px;
 }
@@ -897,10 +928,28 @@ input:focus{
     border-radius:50px;
     object-fit:cover;
 }
-
-
 .header-user-info {
-    width: 200px;
+    width:250px;
+    display:flex;
+}
+
+
+.widget-content-left button {
+    background-color: transparent;
+    border: none !important;
+    padding: 0 !important;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    outline: 0 !important;
+    box-shadow: none !important;
+}
+.widget-content-left button:hover {
+    background-color: transparent;
+   
+}
+.button-grps{
+    margin-left:6px;
 }
 
 

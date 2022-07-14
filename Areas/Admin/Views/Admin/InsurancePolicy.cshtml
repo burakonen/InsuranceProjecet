@@ -80,12 +80,65 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="widget-content-left  ml-3 header-user-info">
-                                <div class="widget-heading">
-                                    <span class="own">Gökhan Sarılar</span>
-                                </div>
-                                <div class="widget-subheading">
-                                    BMG Sigorta - CEO
+                             <div class="widget-content-left ml-3 header-user-info">
+                                 <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#settingsModal">
+                                        <div class="settings-image-group">
+                                            <img src="~/@Model.Item1.Image" class="settings-image" alt="">
+                                        </div>
+                                        <div class="button-grps">
+                                             <div class="widget-heading">
+                                                    <span class="own">Gökhan Sarılar</span>
+                                             </div>
+                                             <div class="widget-subheading">
+                                                    BMG Sigorta - CEO
+                                             </div>
+                                        </div>
+                                 </button>
+                            </div>
+                             @*settingsModal*@
+                            <div class="modal fade" id="settingsModal" data-backdrop="false" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="exampleModalLabel">Ayarlar</h5>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+
+                                        <div class="modal-body" id="form-modal-body">
+                                            <form asp-area="admin" asp-controller="Admin" asp-action="EditSettings" method="post" enctype="multipart/form-data">
+                                                <div class="form-group">
+
+                                                    <div class="avatar-upload">
+                                                        <div class="avatar-edit">
+                                                            <input type='file' name="file" id="imageUpload" accept=".png, .jpg, .jpeg" onchange="previewFile()" />
+                                                            <label for="imageUpload"><i class="fa-solid fa-pencil"></i></label>
+                                                        </div>
+                                                        <div class="avatar-preview">
+                                                            <img id="imagePreview" src="~/@Model.Item1.Image">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="label-g" for="exampleInputEmail1">Email</label>
+                                                    <input class="form-control" asp-for="@Model.Item1.Email">
+                                                    <span class="validation" asp-validation-for="Item1.Email"></span>
+                                                    <small id="emailHelp" class="form-text text-muted"></small>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="label-g" for="exampleInputPassword1">Şifre</label>
+                                                    <input class="form-control" asp-for="@Model.Item1.Password">
+                                                    <span class="validation" asp-validation-for="Item1.Password"></span>
+                                                </div>
+                                                <div class="btns">
+                                                    <button type="submit" class="btn btn-dark">Kaydet</button>
+                                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Kapat</button>
+                                                </div>
+                                            </form>
+
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -254,10 +307,6 @@
                 <div class="app-page-title">
                     <div class="page-title-wrapper">
                         <div class="page-title-heading">
-                            <div class="page-title-icon">
-                                <i class="pe-7s-car icon-gradient bg-mean-fruit">
-                                </i>
-                            </div>
                             <div class="d-flex justify-content-between">
                                 <span class="dashboard-text">@Model.Item1.InsuranceLists.Name Yönetim Sayfası</span>
                             </div>
@@ -287,7 +336,7 @@
                                     <form asp-area="admin" asp-controller="admin" asp-action="InsurancePolicyNameEdit" method="post">
                                         <div class="form-group">
                                             <label class="label-g" for="exampleInputEmail1">Sigorta Adı</label>
-                                            <input type="text" class="form-control" asp-for="@Model.Item1.InsuranceLists.Name">
+                                            <input asp-for="@Model.Item1.InsuranceLists.Name" class="form-control">
                                             <span asp-validation-for="@Model.Item1.InsuranceLists.Name" class="validation"></span>
                                             <input type="hidden" class="form-control" name="insuranceId" value="@Model.Item1.InsuranceLists.Id">
                                         </div>
@@ -338,14 +387,14 @@
                                 </div>
 
                                 <div class="modal-body" id="form-modal-body">
-                                    <form asp-area="admin" asp-controller="admin" asp-action="InsurancePolicyPageImageEdit" method="post" enctype="multipart/form-data">
-                                        @foreach (var item in Model.Item1.InsuranceLists.PageImages)
-                                        {
+                                    @foreach(var item in Model.Item1.InsuranceLists.PageImages)
+                                    {
+                                        <form asp-area="admin" asp-controller="admin" asp-action="InsurancePolicyPageImageEdit" method="post" enctype="multipart/form-data">
                                             <div class="form-group">
                                                 <img src="~/@item.Name" class="pgi" />
-                                                <input class="image-input form-control-file" type="file" asp-for="@Model.Item3.PageImage" />
+                                                <input class="image-input form-control-file" type="file" asp-for="@item.Name" />
                                                 <div>
-                                                    <span asp-validation-for="@Model.Item3.PageImage" class="validation"></span>
+                                                    <span asp-validation-for="@item.Name" class="validation"></span>
                                                 </div>
                                                 <input type="hidden" name="pageImageId" value="@item.Id" />
                                             </div>
@@ -354,8 +403,8 @@
                                                 <button type="submit" class="btn btn-dark">Kaydet</button>
                                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Kapat</button>
                                             </div>
-                                        }
-                                    </form>
+                                        </form>
+                                    }
 
                                 </div>
                             </div>
@@ -370,7 +419,7 @@
                         </a>
                     </div>
                     <div class="col-lg-3 ins-inf">
-                        <a class="btn btn-dark" data-toggle="modal" data-target="#seoModal" id="seo-id" data-id="@Model.Item1.InsuranceLists.Id">
+                        <a class="btn btn-dark" data-toggle="modal" data-target="#seoModal" id="seo-id" data-id="@Model.Item1.InsuranceLists.SEOURL">
                             <h2>Seo</h2>
                         </a>
                     </div>
@@ -391,7 +440,7 @@
                                         <div class="form-group">
                                             <label class="label-g">Anahtar Değer</label>
                                             <input value="@Model.Item1.InsuranceLists.SEOURL" name="seoValue" class="form-control seo-value" />
-                                            <input type="hidden" name="seoId" value="@Model.Item1.InsuranceLists.Id" />
+                                            <input type="hidden" name="seoId" value="@Model.Item1.InsuranceLists.SEOURL" />
                                         </div>
 
                                         <div class="btns">

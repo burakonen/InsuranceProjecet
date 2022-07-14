@@ -6,6 +6,7 @@ using InsuranceProject.DataMethods;
 using InsuranceProject.Migrations;
 using InsuranceProject.Models;
 using InsuranceProject.Models.ViewModel;
+using InsuranceProjectApp.Areas.Admin.Model;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -86,7 +87,7 @@ namespace InsuranceProject.Area.Admin.Controllers
 
 
         [Route("/admin/policeler/{url}")]
-        public IActionResult InsurancePolicy(string url)
+        public async Task<IActionResult> InsurancePolicy(string url)
         {
             if (url == null)
             {
@@ -94,23 +95,26 @@ namespace InsuranceProject.Area.Admin.Controllers
             }
 
 
-            var insurancePolicies = context.InsuranceLists.Where(a => a.SEOURL == url).Include(s => s.PageImages).FirstOrDefault();
+            var insurancePolicies = await context.InsuranceLists.Where(a => a.SEOURL == url).Include(s => s.PageImages).FirstOrDefaultAsync();
             var insurancePoliciesUsers = context.Users.Where(i => i.InsuranceListId == insurancePolicies.Id).ToList();
-
             var individualGroupName = _getGroupNames.GetIndividiaulGroupName();
             var corporateGroupName = _getGroupNames.GetCorporateGroupName();
             var individualcategoryGroups = _getAllCategories.GetCategories();
             var CorporatecategoryGroups = _getAllCategories.GetCorporateCategorie();
+            var admin = await context.Admin.FirstAsync();
 
 
             return View(Tuple.Create<IndexWM, CategoryModel, PageImageModel>(new IndexWM()
             {
                 CategoriesAndInsuranceList = individualcategoryGroups,
                 CorporatecategoryGroups = CorporatecategoryGroups,
-                InsuranceLists = insurancePolicies,
                 InsuranceListUsers = insurancePoliciesUsers,
+                InsuranceLists = insurancePolicies,
                 IndividualGroup = individualGroupName,
                 CorporateGroup = corporateGroupName,
+                Email = admin.Email,
+                Password = admin.PasswordHash,
+                Image = admin.Image
 
             }, new CategoryModel(), new PageImageModel()));
         }
@@ -120,7 +124,7 @@ namespace InsuranceProject.Area.Admin.Controllers
 
         [HttpGet]
         [Route("/admin/policeler/{url}/teminat-bilgileri")]
-        public IActionResult InsurancePolicyGuaranteeNameEdit(string url)
+        public async Task<IActionResult> InsurancePolicyGuaranteeNameEdit(string url)
         {
             if (url == null)
             {
@@ -129,12 +133,10 @@ namespace InsuranceProject.Area.Admin.Controllers
 
             var individualGroupName = _getGroupNames.GetIndividiaulGroupName();
             var corporateGroupName = _getGroupNames.GetCorporateGroupName();
-
             var insurancePolicies = context.InsuranceLists.Where(a => a.SEOURL == url).Include(s => s.Guarantees.Where(s => s.IsDeleted == false)).FirstOrDefault();
-
             var individualcategoryGroups = _getAllCategories.GetCategories();
             var CorporatecategoryGroups = _getAllCategories.GetCorporateCategorie();
-
+            var admin = await context.Admin.FirstAsync();
 
             return View(Tuple.Create<IndexWM, GuaranteePostWM>(new IndexWM()
             {
@@ -142,7 +144,10 @@ namespace InsuranceProject.Area.Admin.Controllers
                         CorporateGroup = corporateGroupName,
                         InsuranceLists = insurancePolicies, 
                         CategoriesAndInsuranceList = individualcategoryGroups, 
-                        CorporatecategoryGroups = CorporatecategoryGroups 
+                        CorporatecategoryGroups = CorporatecategoryGroups,
+                        Email = admin.Email,
+                        Password = admin.PasswordHash,
+                        Image = admin.Image
             }, new GuaranteePostWM()));
 
         }
@@ -231,17 +236,16 @@ namespace InsuranceProject.Area.Admin.Controllers
         {
             var individualGroupName = _getGroupNames.GetIndividiaulGroupName();
             var corporateGroupName = _getGroupNames.GetCorporateGroupName();
-
-
             var guaranteeName = await context.Guarantees.Where(i => i.Id == id).Include(s => s.GuaranteeNames.Where(s => s.IsDeleted == false)).Include(s => s.InsuranceList).ToListAsync();
-
-
             var individualcategoryGroups = _getAllCategories.GetCategories();
             var CorporatecategoryGroups = _getAllCategories.GetCorporateCategorie();
-
+            var admin = await context.Admin.FirstAsync();
 
             return View(Tuple.Create<IndexWM, GuaranteeNameDetails>(new IndexWM()
             {
+                Email = admin.Email,
+                Password = admin.PasswordHash,
+                Image = admin.Image,
                 IndividualGroup = individualGroupName,
                 CorporateGroup = corporateGroupName,
                 CategoriesAndInsuranceList = individualcategoryGroups, 
@@ -316,20 +320,19 @@ namespace InsuranceProject.Area.Admin.Controllers
 
             var insurancePolicies = await context.InsuranceLists.Where(a => a.SEOURL == url).Include(k => k.PageDescriptions).Select(a => new PageDescriptionsWM() {
             
-               PageDescWM = a.PageDescriptions.Select(s => new PageDesc() {Header = s.Header, Description = s.Description, Id = s.Id }).FirstOrDefault()
-            
+               PageDescWM = a.PageDescriptions.Select(s => new PageDesc() {Header = s.Header, Description = s.Description, Id = s.Id, InsuranceName = s.InsuranceList.Name }).FirstOrDefault()
             
             }).FirstOrDefaultAsync();
-
-
-
             var individualcategoryGroups = _getAllCategories.GetCategories();
             var CorporatecategoryGroups = _getAllCategories.GetCorporateCategorie();
+            var admin = await context.Admin.FirstAsync();
 
 
             return View(Tuple.Create<IndexWM, CategoryModel, PageDescriptionModel>(new IndexWM()
             {
-                //InsuranceLists = insurancePolicies,
+                Email = admin.Email,
+                Password = admin.PasswordHash,
+                Image = admin.Image,
                 CategoriesAndInsuranceList = individualcategoryGroups,
                 CorporatecategoryGroups = CorporatecategoryGroups,
                 IndividualGroup = individualGroupName,

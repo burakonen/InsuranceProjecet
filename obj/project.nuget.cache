@@ -1,9 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "lRo7vVFCm0Mx/8YiBpCQj6bgh0Tci0V8tTWbrCQGLjIq7Mh+mrXMZFMqxIHZdH4vFWwfbbPo+vOdXKXqhpXPSw==",
+  "dgSpecHash": "xSyxMbCvCrIpikKkp3UlXFe3T03SuK9oo28sWh5NGSqOjkNDjh4x5uhNUYbLRgVOsusRhh/zji7v5ej94anz2g==",
   "success": true,
   "projectFilePath": "D:\\Git\\InsuranceProject\\InsuranceProjectApp1\\InsuranceProjectApp.csproj",
   "expectedPackageFiles": [
+    "C:\\Users\\lenovo\\.nuget\\packages\\ckeditor\\3.6.4\\ckeditor.3.6.4.nupkg.sha512",
     "C:\\Users\\lenovo\\.nuget\\packages\\closedxml\\0.95.4\\closedxml.0.95.4.nupkg.sha512",
     "C:\\Users\\lenovo\\.nuget\\packages\\documentformat.openxml\\2.7.2\\documentformat.openxml.2.7.2.nupkg.sha512",
     "C:\\Users\\lenovo\\.nuget\\packages\\epplus\\6.0.5\\epplus.6.0.5.nupkg.sha512",

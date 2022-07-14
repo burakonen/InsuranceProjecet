@@ -18,7 +18,8 @@ namespace InsuranceProject.Areas.Admin.Model
 
 
         [Required(ErrorMessage = "Sayfa açıklamasıı zorunlu bir alan")]
-
         public string Description { get; set; }
+
+        public string InsuranceName { get; set; }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using InsuranceProject.Context;
 using InsuranceProject.Models;
 using InsuranceProject.Models.ViewModel;
+using InsuranceProjectApp.Areas.Admin.Model;
 using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
@@ -27,6 +28,7 @@ namespace InsuranceProject.Areas.Admin.Model
         public List<GroupsAndUsers> Users { get; set; }
         public int AllCustomerCount { get; set; }
         public List<GroupsAndCategories> IndividiualCount { get; set; }
+        public InsuranceDto AdminInsurancePolicy { get; set; }
         public int CorporateCount { get; set; }
 
 
