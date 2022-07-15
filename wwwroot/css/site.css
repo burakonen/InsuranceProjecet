@@ -13,8 +13,9 @@ a.navbar-brand {
   border-color: #1861ac;
 }
 
+
 @media (min-width: 768px) {
-  html {
+    html {
     font-size: 16px;
   }
 }
@@ -305,12 +306,17 @@ body {
 
 .guarantee-name-col{
     display:flex;
-    align-items:center;
     padding:0;
+    align-items:center;
     margin-bottom:50px;
 }
-.guarantee-name-col i{
-    color:green;
+.guarantee-groups{
+    padding:0 !important;
+    margin-left:5px;
+    
+}
+.guarantee-name-col i {
+    color: green;
 }
 .faq-row {
     margin: 0;
@@ -347,11 +353,6 @@ body {
 
 .ad-group {
     margin-top: 50px;
-}
-ad-group i {
-    color: darkred;
-    font-size: 90px;
-    margin-bottom: 40px;
 }
 
 .box {
@@ -1253,7 +1254,19 @@ nav{
     display:flex;
     position:relative;
     margin-top:50px;
-   
+}
+.guarantee-description{
+    font-size:11px;
+    font-weight:lighter;
+}
+
+.res-col{
+    font-size:50px;
+    color:darkred;
+}
+.res-col h4{
+    font-size:18px;
+    margin-top:20px;
 }
 
 .header span {

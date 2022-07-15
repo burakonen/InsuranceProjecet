@@ -74,9 +74,9 @@ namespace InsuranceProject.Areas.Admin.Controllers
             var admin = await context.Admin.FirstAsync();
 
             return View(Tuple.Create<IndexWM, CategoryModel>(new IndexWM() {
-                Email = admin.Email,
-                Password = admin.PasswordHash,
-                Image = admin.Image,
+                //Email = admin.Email,
+                //Password = admin.PasswordHash,
+                //Image = admin.Image,
                 IndividualGroup = individualGroupName, 
                 CorporateGroup = corporateGroupName, 
                 CategoriesByGroup = categories, 
@@ -144,9 +144,9 @@ namespace InsuranceProject.Areas.Admin.Controllers
             var admin = await context.Admin.FirstAsync();
             return View(Tuple.Create<IndexWM, CategoryModel, InsuranceNameEditModel>(new IndexWM()
             {
-                Email = admin.Email,
-                Password = admin.PasswordHash,
-                Image = admin.Image,
+                //Email = admin.Email,
+                //Password = admin.PasswordHash,
+                //Image = admin.Image,
                 CategoryName = categoryName, 
                 CategoriesInsurunceList = categoriesAndInsuruncaList,
                 IndividualGroup = individualGroupName,

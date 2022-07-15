@@ -61,6 +61,14 @@
             </span>
         </div>
         <div class="app-header__content">
+             <div class="app-header-left">
+                @foreach (var item in Model.Item2.Guarantees)
+                {
+                    <div class="d-flex justify-content-between">
+@*                        <span class="dashboard-text">@item.InsuranceName Düzenleme Sayfası</span>
+*@                    </div>
+                }
+            </div>
             <div class="app-header-right">
                 <div class="header-btn-lg pr-0">
                     <div class="widget-content p-0">
@@ -76,7 +84,6 @@
                                         <button type="button" tabindex="0" class="dropdown-item">Dividers</button>
                                     </div>
                                 </div>
-
                             </div>
 
                             <div class="widget-content-left  ml-3 header-user-info">
@@ -260,25 +267,9 @@
         </div>
         <div class="app-main__outer">
             <div class="app-main__inner">
-                <div class="app-page-title">
-                    <div class="page-title-wrapper">
-                        <div class="page-title-heading">
-                            <div class="page-title-icon">
-                                <i class="pe-7s-car icon-gradient bg-mean-fruit">
-                                </i>
-                            </div>
-                            @foreach (var item in Model.Item2.Guarantees)
-                            {
-                                <div class="d-flex justify-content-between">
-                                    <span class="dashboard-text">@item.Name Düzenleme Sayfası</span>
-                                </div>
-                            }
-                        </div>
-                    </div>
-                </div>
                 <div class="row new-info-row">
-                    <div class="col-11 col-sm-12 col-md-11 col-lg-11 col-xl-11 text-center mb-2">
-                        <div class="d-flex justify-content-end mb-3">
+                    <div class="col-11 col-sm-12 col-md-11 col-lg-12 col-xl-12 text-center mb-2">
+                        <div class="d-flex justify-content-end mb-2">
                             <a data-toggle="modal" data-target="#guaranteeModal" id="newGuaranteeName" class="new-gua bg-dark">Yeni Teminat Ekle</a>
 
                             @foreach (var item in Model.Item2.Guarantees)
@@ -286,7 +277,7 @@
 
                                 <div class="modal fade" id="guaranteeModal" data-backdrop="false" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                     <div class="modal-dialog">
-                                        <div class="modal-content">
+                                        <div class="modal-content" id="modal-content-guarantee">
                                             <div class="modal-header">
                                                 <h5 class="modal-title" id="exampleModalLabel">Teminat Ekleme Ekranı</h5>
                                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -299,17 +290,16 @@
                                                         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                                                         <label class="label-g" for="exampleInputEmail1">Teminat Adı</label>
                                                         <input asp-for="@Model.Item2.Name" class="form-control">
-                                                        <span asp-validation-for="@Model.Item2.Name" class="validation"></span>
-                                                        <input type="hidden" name="insuranceListId" class="form-control fa-que" value="@item.InsuranceList.Id">
-                                                        <input type="hidden" name="guaranteeInputId" class="form-control fa-que" value="@item.Id">
+                                                        <div class="validation-group">
+                                                            <span asp-validation-for="@Model.Item2.Name" id="validation"></span>
+                                                        </div>
+@*                                                        <input type="hidden" name="insuranceListId" class="form-control fa-que" value="@item.InsuranceList.Id">
+*@                                                        <input type="hidden" name="guaranteeInputId" class="form-control fa-que" value="@item.Id">
                                                     </div>
                                                     <div class="form-group">
                                                         <label class="label-g" for="exampleInputEmail1">Teminat Açıklaması</label>
                                                         <small id="emailHelp" class="form-text text-muted sml">Teminatlar için ek açıklama alanıdır. Zorunlu bir alan değildir.</small>
-                                                        <textarea class="ckeditor" id="ckeditor1"></textarea>
-
-                                                     
-            
+                                                        <textarea asp-for="@Model.Item2.Descriptions" class="ckeditor" id="editor"></textarea>
                                                     </div>
 
                                                     <div class="btns">
@@ -326,7 +316,7 @@
                         @foreach (var item in Model.Item2.Guarantees)
                         {
 
-                            @foreach (var items in item.GuaranteeNames)
+                            @foreach (var items in item.GuaranteeName)
                             {
 
                                 <div class="modal fade" id="exampleModal" data-backdrop="false" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -345,8 +335,10 @@
                                                     <div class="form-group">
                                                         <label for="" class="label-g">Teminat Adı</label>
                                                         <input asp-for="@Model.Item2.Name" class="form-control gu-ran">
-                                                        <span asp-validation-for="@Model.Item2.Name" class="validation"></span>
-                                                        <input type="hidden" class="guarantee" name="guaranteeNameId" value="@items.Id" />
+                                                        <div class="validation-group">
+                                                            <span asp-validation-for="@Model.Item2.Name" class="validation"></span>
+                                                        </div>
+                                                        <input type="hidden" class="guarantee" name="guaranteeNameId" value="@items.GuaranteeId" />
                                                     </div>
 
                                                     <div class="btns">
@@ -369,6 +361,8 @@
                                     <tr>
                                         <th scope="col">Teminat İsmi</th>
                                         <th scope="col">Poliçe Adı</th>
+                                        <th scope="col">Kategori Adı</th>
+                                        <th scope="col">Teminat</th>
                                         <th scope="col">Eklenme Tarihi</th>
                                         <th></th>
                                     </tr>
@@ -376,26 +370,28 @@
                                 <tbody>
                                     @foreach (var item in Model.Item2.Guarantees)
                                     {
-
-                                        @foreach (var items in item.GuaranteeNames)
+                                        @foreach (var items in item.GuaranteeName)
                                         {
                                             <tr>
-                                                <td>@items.Name</td>
-                                                <td>@items.InsuranceList.Name</td>
-                                                <td>@item.Date.ToString("dddd, MMMM d, yyyy");</td>
+                                                <td>@items.Guarantee</td>
+                                                <td>@item.InsuranceName</td>
+                                                <td>
+                                                    @foreach (var cat in item.CategoryName)
+                                                    {
+                                                        @cat
+                                                    }
+                                                </td>
+                                                <td>@item.Guaraantee</td>
+                                                <td>@items.CreatedDate.ToString("dddd, MMMM d, yyyy")</td>
                                                 <td class="t-t">
-                                                    <input type="hidden" data-id="@items.Id" id="hiddenGuaranteeId" name="name" value="@items.Id" />
-                                                    <button class="btn btn-dark all-button" data-id="@items.Id" type="button" id="guaranteeeId" data-toggle="modal" data-target="#exampleModal">Düzenle</button>
-                                                    <button class="btn btn-light all-button" data-id="@items.Id" id="deleteGuaranteeNameId">Sil</button>
+
+                                                    <button class="btn btn-secondary all-button" data-id="@items.GuaranteeId" type="button" id="guaranteeeId" data-toggle="modal" data-target="#exampleModal">Düzenle</button>
+                                                    <button class="btn btn-light all-button" data-id="@items.GuaranteeId" id="deleteGuaranteeNameId">Sil</button>
                                                 </td>
                                             </tr>
-
-
                                         }
 
-
                                     }
-
                                 </tbody>
                             </table>
                         </div>
@@ -410,63 +406,6 @@
 <script src="~/lib/ckeditor/ckeditor.js"></script>
 <script src="~/lib/ckeditor/config.js"></script>
 
-<script>
-    $(document).on("click", "#guaranteeeId", function() {
-        var passedID = $(this).data('id');
-        $(".modal-body .guarantee").val(passedID);
-        console.log(passedID);
-    });
-
-</script>
-
-
-@*<script>
-    $(document).on("click", "#guaranteeNameId", function () {
-        var passedID = $(this).data('id');
-        $(".modal-body .guaranteeName").val(passedID);
-    });
-
-</script>*@
-
-
-<script type="text/javascript">
-
-    $(function() {
-        $("tbody").on("click", "#guaranteeeId", function() {
-
-            let btn = $(this);
-            let id = btn.data("id");
-            console.log(id);
-
-            $.ajax({
-                type: "GET",
-                dataType: "json",
-                url: "/admin/admin/getguaranteename/" + id,
-                success: function(data) {
-                    let parseData = JSON.parse(data);
-                    console.log(parseData);
-
-                    let value = "";
-                    value += `${parseData.Name}`;
-
-                    $(".gu-ran").val(value);
-
-
-
-
-                }
-            });
-
-        });
-    });
-
-
-    function auto_grow(element) {
-        element.style.height = "5px";
-        element.style.height = (element.scrollHeight) + "px";
-    }
-
-</script>
 
 
 <script>
@@ -502,6 +441,16 @@
 </script>
 
 
+<script>
+    $(document).on("click", "#guaranteeeId", function() {
+        var passedID = $(this).data('id');
+        $(".modal-body .guarantee").val(passedID);
+        console.log(passedID);
+    });
+
+</script>
+
+
 <script type="text/javascript">
 
     $(function() {
@@ -512,10 +461,10 @@
             $.ajax({
                 type: "GET",
                 dataType: "json",
-                url: "/admin/admin/getguarantee/" + id,
+                url: "/admin/admin/getguaranteename/" + id,
                 success: function(data) {
                     let parseData = JSON.parse(data);
-                    console.log(parseData);
+                    console.log(data);
 
                     let value = "";
                     value += `${parseData.Name}`;
@@ -530,7 +479,6 @@
 
         });
     });
-
 
 
 </script>

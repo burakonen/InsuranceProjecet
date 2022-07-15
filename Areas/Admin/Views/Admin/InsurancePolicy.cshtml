@@ -59,17 +59,17 @@
             </span>
         </div>   
         <div class="app-header__content">
-            
+           <div class="app-header-left">
+                <div class="d-flex justify-content-between">
+                    <span class="dashboard-text">@Model.Item1.InsuranceLists.Name Sayfası</span>
+                </div>
+            </div>
             <div class="app-header-right">
                 <div class="header-btn-lg pr-0">
                     <div class="widget-content p-0">
                         <div class="widget-content-wrapper">
                             <div class="widget-content-left">
                                 <div class="btn-group">
-                                    <a data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="p-0 btn">
-                                        <img width="42" class="rounded-circle" src="assets/images/avatars/1.jpg" alt="">
-                                        <i class="fa fa-angle-down ml-2 opacity-8"></i>
-                                    </a>
                                     <div tabindex="-1" role="menu" aria-hidden="true" class="dropdown-menu dropdown-menu-right">
                                         <button type="button" tabindex="0" class="dropdown-item">User Account</button>
                                         <button type="button" tabindex="0" class="dropdown-item">Settings</button>
@@ -80,20 +80,21 @@
                                     </div>
                                 </div>
                             </div>
-                             <div class="widget-content-left ml-3 header-user-info">
-                                 <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#settingsModal">
-                                        <div class="settings-image-group">
-                                            <img src="~/@Model.Item1.Image" class="settings-image" alt="">
+
+                            <div class="widget-content-left  ml-3 header-user-info">
+                                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#settingsModal">
+                                    <div class="settings-image-group">
+                                        <img src="~/@Model.Item1.Image" class="settings-image" alt="">
+                                    </div>
+                                    <div class="button-grps">
+                                        <div class="widget-heading">
+                                            <span class="own">Gökhan Sarılar</span>
                                         </div>
-                                        <div class="button-grps">
-                                             <div class="widget-heading">
-                                                    <span class="own">Gökhan Sarılar</span>
-                                             </div>
-                                             <div class="widget-subheading">
-                                                    BMG Sigorta - CEO
-                                             </div>
+                                        <div class="widget-subheading">
+                                            BMG Sigorta - CEO
                                         </div>
-                                 </button>
+                                    </div>
+                                </button>
                             </div>
                              @*settingsModal*@
                             <div class="modal fade" id="settingsModal" data-backdrop="false" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -105,14 +106,14 @@
                                                 <span aria-hidden="true">&times;</span>
                                             </button>
                                         </div>
-
+                    
                                         <div class="modal-body" id="form-modal-body">
                                             <form asp-area="admin" asp-controller="Admin" asp-action="EditSettings" method="post" enctype="multipart/form-data">
                                                 <div class="form-group">
-
+                               
                                                     <div class="avatar-upload">
                                                         <div class="avatar-edit">
-                                                            <input type='file' name="file" id="imageUpload" accept=".png, .jpg, .jpeg" onchange="previewFile()" />
+                                                            <input type='file' name="file" id="imageUpload" accept=".png, .jpg, .jpeg" onchange="previewFile()"/>
                                                             <label for="imageUpload"><i class="fa-solid fa-pencil"></i></label>
                                                         </div>
                                                         <div class="avatar-preview">
@@ -304,16 +305,6 @@
         </div>   
         <div class="app-main__outer">
             <div class="app-main__inner">
-                <div class="app-page-title">
-                    <div class="page-title-wrapper">
-                        <div class="page-title-heading">
-                            <div class="d-flex justify-content-between">
-                                <span class="dashboard-text">@Model.Item1.InsuranceLists.Name Yönetim Sayfası</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
                 <div class="row ins-r">
                     <div class="col-lg-3 ins-inf">
                         <a class="btn btn-dark" data-toggle="modal" data-target="#exampleModal">
@@ -333,11 +324,10 @@
                                 </div>
 
                                 <div class="modal-body" id="form-modal-body">
-                                    <form asp-area="admin" asp-controller="admin" asp-action="InsurancePolicyNameEdit" method="post">
+                                    <form asp-area="admin" asp-controller="admin" asp-action="InsurancePolicyNameEdit" method="post" name="formInsuranceName" id="formInsuranceName">
                                         <div class="form-group">
                                             <label class="label-g" for="exampleInputEmail1">Sigorta Adı</label>
-                                            <input asp-for="@Model.Item1.InsuranceLists.Name" class="form-control">
-                                            <span asp-validation-for="@Model.Item1.InsuranceLists.Name" class="validation"></span>
+                                            <input name="insuranceName" class="form-control" value="@Model.Item1.InsuranceLists.Name">
                                             <input type="hidden" class="form-control" name="insuranceId" value="@Model.Item1.InsuranceLists.Id">
                                         </div>
 
@@ -346,7 +336,6 @@
                                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Kapat</button>
                                         </div>
                                     </form>
-
                                 </div>
                             </div>
                         </div>
@@ -389,13 +378,10 @@
                                 <div class="modal-body" id="form-modal-body">
                                     @foreach(var item in Model.Item1.InsuranceLists.PageImages)
                                     {
-                                        <form asp-area="admin" asp-controller="admin" asp-action="InsurancePolicyPageImageEdit" method="post" enctype="multipart/form-data">
+                                        <form asp-area="admin" asp-controller="admin" asp-action="InsurancePolicyPageImageEdit"  name="formInsuranceImage" id="formInsuranceImage" method="post" enctype="multipart/form-data">
                                             <div class="form-group">
                                                 <img src="~/@item.Name" class="pgi" />
-                                                <input class="image-input form-control-file" type="file" asp-for="@item.Name" />
-                                                <div>
-                                                    <span asp-validation-for="@item.Name" class="validation"></span>
-                                                </div>
+                                                <input class="image-input form-control-file" type="file" name="file" value="@item.Name" />
                                                 <input type="hidden" name="pageImageId" value="@item.Id" />
                                             </div>
 
@@ -439,8 +425,8 @@
                                     <form asp-area="admin" asp-controller="admin" asp-action="InsurancePolicySeo" method="post" name="formSeo" id="formSeo">
                                         <div class="form-group">
                                             <label class="label-g">Anahtar Değer</label>
-                                            <input value="@Model.Item1.InsuranceLists.SEOURL" name="seoValue" class="form-control seo-value" />
-                                            <input type="hidden" name="seoId" value="@Model.Item1.InsuranceLists.SEOURL" />
+                                            <input value="@Model.Item1.InsuranceLists.SEOURL" type="text" name="seoValue" class="form-control seo-value" />
+                                            <input type="hidden" name="seoId" value="@Model.Item1.InsuranceLists.Id" />
                                         </div>
 
                                         <div class="btns">
@@ -473,7 +459,7 @@
                 </div>
 
                 <div class="row all-info-row">
-                    <div class="col-md-11 col-lg-11">
+                    <div class="col-md-11 col-lg-12">
                         <div class="info-div">
                             <h2 class="all-us">@Model.Item1.InsuranceLists.Name Kullanıcı Bilgileri</h2>
                             <div class="buttons">
@@ -493,6 +479,7 @@
                                     <th scope="col">Kimlik No</th>
                                     <th scope="col">Cep No</th>
                                     <th scope="col">Tarih</th>
+                                    <th></th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -505,6 +492,9 @@
                                         <td>@item.TCKN</td>
                                         <td>@item.PhoneNumber</td>
                                         <td>@item.Date.ToString("dddd, MMMM d, yyyy");</td>
+                                        <td class="t-t">
+                                            <button class="btn btn-dark all-button" data-id="@item.Id" id="deleteUser">Sil</button>
+                                        </td>
                                     </tr>
 
                                 }
@@ -519,29 +509,28 @@
 </div>
 
 
-@*<script type="text/javascript">
 
-    $(function () {
-        $(".buttons").on("click", "#userId", function () {
+<script>
 
-            let btn = $(this);
-            let id = btn.data("id");
-            $.ajax({
-                type: "POST",
-                url: "/admin/admin/ExportToExcell/" + id,
-                success: function (data) {
-                    console.log(data);
-
-                 
-                }
+    $(function() {
+        $("tbody").on("click", "#deleteUser", function() {
+            var btn = $(this);
+            bootbox.confirm("<h5>Silmek istediğinize emin misiniz?</h5>", function(result) {
+                if (result) {
+                    var id = btn.data("id");
+                    $.ajax({
+                        type: "POST",
+                        url: "/Admin/Admin/deleteUser/" + id,
+                        success: function() {
+                            btn.parent().parent().remove();
+                        },
+                    });
+                };
             });
-
         });
     });
 
-
-
-</script>*@
+</script>
 
 
 <script>
@@ -551,10 +540,41 @@
         $("#formSeo").validate(
             {
                 ignore: [],
+                errorClass:'error-validation',
                 debug: false,
                 rules: {
 
                     seoValue: {
+                        required: true,
+                    },
+                },
+                messages:
+                {
+
+                    seoValue: {
+                        required: "Seo için anahar değer zorunlu bir alan",
+                    },
+
+
+                }
+            });
+    });
+</script>
+
+
+
+<script>
+
+    $(document).ready(function () {
+
+        $("#formInsuranceName").validate(
+            {
+                ignore: [],
+                errorClass:'error-validation',
+                debug: false,
+                rules: {
+
+                    "insuranceName": {
                         required: true,
                     },
 
@@ -563,10 +583,40 @@
                 messages:
                 {
 
-                    seoValue: {
-                        required: "Seo için anahar değer zorunlu bir alan",
+                    insuranceName: {
+                        required: "Poliçe adı zorunlu bir alan",
 
 
+                    },
+
+
+                }
+            });
+    });
+</script>
+
+
+
+<script>
+
+    $(document).ready(function () {
+
+        $("#formInsuranceImage").validate(
+            {
+                ignore: [],
+                errorClass:'error-validation',
+                debug: false,
+                rules: {
+
+                    file: {
+                        required: true,
+                    },
+                },
+                messages:
+                {
+
+                    file: {
+                        required: "Sayfa resmi zorunlu bir alan",
                     },
 
 

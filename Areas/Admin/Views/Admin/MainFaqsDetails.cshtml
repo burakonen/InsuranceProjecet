@@ -5,9 +5,11 @@
     Layout = "~/Areas/Admin/Views/Shared/_adminLayout.cshtml";
 }
 
+<script src="~/lib/ckeditor/ckeditor.js"></script>
+<script src="~/lib/ckeditor/config.js"></script>
 
 <script>
-    $(document).ready(function () {
+    $(document).ready(function() {
         $('#myTable').DataTable({
             language: {
 
@@ -58,17 +60,19 @@
                     </span>
                 </button>
             </span>
-        </div>   
+        </div>
         <div class="app-header__content">
+            <div class="app-header-left">
+                <div class="d-flex justify-content-between">
+                    <span class="dashboard-text">@Model.Item1.MainFaqs.InsuranceList.Name Sık Sorulanlar Düzenleme Sayfası</span>
+                </div>
+            </div>
             <div class="app-header-right">
                 <div class="header-btn-lg pr-0">
                     <div class="widget-content p-0">
                         <div class="widget-content-wrapper">
                             <div class="widget-content-left">
                                 <div class="btn-group">
-                                    <a data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="p-0 btn">
-                                        <i class="fa fa-angle-down ml-2 opacity-8"></i>
-                                    </a>
                                     <div tabindex="-1" role="menu" aria-hidden="true" class="dropdown-menu dropdown-menu-right">
                                         <button type="button" tabindex="0" class="dropdown-item">User Account</button>
                                         <button type="button" tabindex="0" class="dropdown-item">Settings</button>
@@ -78,20 +82,68 @@
                                         <button type="button" tabindex="0" class="dropdown-item">Dividers</button>
                                     </div>
                                 </div>
+                            </div>
 
-                            </div>
-                            <div class="widget-content-left  ml-3 header-user-info">
-                                <div class="widget-heading">
-                                    <span class="own">Gökhan Sarılar</span>
-                                </div>
-                                <div class="widget-subheading">
-                                    BMG Sigorta - CEO
-                                </div>
-                            </div>
-                            <div class="widget-content-right header-user-info ml-3">
-                                <button type="button" class="btn-shadow p-1 btn btn-primary btn-sm show-toastr-example">
-                                    <i class="fa text-white fa-calendar pr-1 pl-1"></i>
+                            <div class="widget-content-left  header-user-info">
+                                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#settingsModal">
+                                    <div class="settings-image-group">
+                                        <img src="~/@Model.Item1.Image" class="settings-image" alt="">
+                                    </div>
+                                    <div class="button-grps">
+                                        <div class="widget-heading">
+                                            <span class="own">Gökhan Sarılar</span>
+                                        </div>
+                                        <div class="widget-subheading">
+                                            BMG Sigorta - CEO
+                                        </div>
+                                    </div>
                                 </button>
+                            </div>
+                            @*settingsModal*@
+                            <div class="modal fade" id="settingsModal" data-backdrop="false" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="exampleModalLabel">Ayarlar</h5>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+
+                                        <div class="modal-body" id="form-modal-body">
+                                            <form asp-area="admin" asp-controller="Admin" asp-action="EditSettings" method="post" enctype="multipart/form-data">
+                                                <div class="form-group">
+
+                                                    <div class="avatar-upload">
+                                                        <div class="avatar-edit">
+                                                            <input type='file' name="file" id="imageUpload" accept=".png, .jpg, .jpeg" onchange="previewFile()" />
+                                                            <label for="imageUpload"><i class="fa-solid fa-pencil"></i></label>
+                                                        </div>
+                                                        <div class="avatar-preview">
+                                                            <img id="imagePreview" src="~/@Model.Item1.Image">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="label-g" for="exampleInputEmail1">Email</label>
+                                                    <input class="form-control" asp-for="@Model.Item1.Email">
+                                                    <span class="validation" asp-validation-for="Item1.Email"></span>
+                                                    <small id="emailHelp" class="form-text text-muted"></small>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="label-g" for="exampleInputPassword1">Şifre</label>
+                                                    <input class="form-control" asp-for="@Model.Item1.Password">
+                                                    <span class="validation" asp-validation-for="Item1.Password"></span>
+                                                </div>
+                                                <div class="btns">
+                                                    <button type="submit" class="btn btn-dark">Kaydet</button>
+                                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Kapat</button>
+                                                </div>
+                                            </form>
+
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -213,26 +265,14 @@
         </div>
         <div class="app-main__outer">
             <div class="app-main__inner">
-                <div class="app-page-title">
-                    <div class="page-title-wrapper">
-                        <div class="page-title-heading">
-                            <div class="page-title-icon">
-                                <i class="pe-7s-car icon-gradient bg-mean-fruit">
-                                </i>
-                            </div>
-                            <div class="d-flex justify-content-between">
-                                <span class="dashboard-text">@Model.Item1.MainFaqs.InsuranceList.Name Sık Sorulanlar Düzenleme Sayfası</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
                 <div class="row new-info-row">
-                    <div class="col-sm-12 col-md-11 col-lg-11 col-xl-11 mb-2">
+                    <div class="col-sm-12 col-md-11 col-lg-12 col-xl-12 mb-2">
+
                         <div class="d-flex justify-content-end mb-3">
-                            <a href="#" data-toggle="modal" data-target="#newGuaranteeName" class="new-gua-faq bg-dark">Sık Sorulanlar için yeni bilgi ekle</a>
+                            <a data-toggle="modal" data-target="#newGuaranteeName" class="new-gua-faq bg-dark">Sık Sorulanlar için yeni bilgi ekle</a>
 
                             <!-- ekleme-modal -->
-                            <div class="modal fade" id="newGuaranteeName" data-backdrop="false" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal fade faqsModal" id="newGuaranteeName" data-backdrop="false" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                 <div class="modal-dialog">
                                     <div class="modal-content">
                                         <div class="modal-header">
@@ -245,13 +285,15 @@
                                             <form id="formFaqs">
                                                 <div class="form-group">
                                                     <label class="label-g">Soru</label>
-                                                    <input class="form-control questionNew" name="question">
+                                                    <textarea class="form-control questionNew" name="question"></textarea>
                                                     <input type="hidden" class="form-control InsuranceListId" name="InsuranceListId" value="@Model.Item1.MainFaqs.InsuranceList.Id">
                                                     <input type="hidden" class="form-control MainFaqsId" name="MainFaqsId" value="@Model.Item1.MainFaqs.Id">
                                                 </div>
                                                 <div class="form-group">
                                                     <label class="label-g">Cevap</label>
-                                                    <textarea class="form-control answerAnswer" name="answer"></textarea>
+                                                  @*   <textarea class="form-control answerAnswer ckeditor" name="answer" id="editor1"></textarea>
+                                                    <textarea name="content0" class="ck_editor_txt" id="ckeditor1"></textarea><br>*@
+
                                                 </div>
 
                                                 <div class="btns">
@@ -266,7 +308,7 @@
                         </div>
 
                         <!--düzeneme modal-->
-                        <div class="modal fade" id="faqs-EditModal" data-backdrop="false" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal fade" id="faqs-EditModal" data-backdrop="false" tabindex="-1" aria-labelledby="" aria-hidden="true">
                             <div class="modal-dialog">
                                 <div class="modal-content">
                                     <div class="modal-header">
@@ -286,11 +328,12 @@
                                             </div>
                                             <div class="form-group">
                                                 <label class="label-g">Cevap</label>
-                                                <input asp-for="@Model.Item2.Answer" class="form-control answer">
-                                                <span asp-validation-for="@Model.Item2.Answer"></span>
+                                                @*<textarea class="form-control answer ckeditor" id="editor">@Model.Item2.Answer</textarea>*@
+
+                                                  <textarea name="content0" class="ck_editor_txt answers" id="ckeditor0"></textarea>
                                             </div>
                                             <div class="btns">
-                                                <button type="submit" class="btn btn-primary">Kaydet</button>
+                                                <button type="submit" class="btn btn-dark">Kaydet</button>
                                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Kapat</button>
                                             </div>
                                         </form>
@@ -318,11 +361,8 @@
                                             </div>
                                         </div>
                                     </div>
-
                                 }
                             </div>
-                            <!-- Modal -->
-
                         </div>
                     </div>
                 </div>
@@ -331,12 +371,12 @@
     </div>
 </div>
 
-
-
 <script>
-    $(document).on("click", "#guaranteeNameId", function () {
+    $(document).on("click", "#faqsEditModal", function() {
         var passedID = $(this).data('id');
-        $(".modal-body .guaranteeName").val(passedID);
+        $(".modal-body .faqs-edit").val(passedID);
+        var a = $(".faqs-edit").val();
+        console.log(a);
     });
 
 </script>
@@ -344,27 +384,30 @@
 
 <script type="text/javascript">
 
-    $(function () {
-        $("tbody").on("click", "#guaranteeNameId", function () {
+    $(function() {
+        $(".wrapper").on("click", "#faqsEditModal", function() {
 
             let btn = $(this);
             let id = btn.data("id");
             $.ajax({
                 type: "GET",
                 dataType: "json",
-                url: "/admin/admin/getguaranteename/" + id,
-                success: function (data) {
+                url: "/admin/admin/GetFaqs/" + id,
+                success: function(data) {
+
+
                     let parseData = JSON.parse(data);
                     console.log(parseData);
 
-                    let value = "";
-                    value += `${parseData.Name}`;
-
-                    $(".gu-ran").val(value);
-
+                    let questions = "";
+                    questions += `${parseData.Question}`;
+                    $(".question").val(questions);
 
 
-
+                    let answers = "";
+                    answers += `${parseData.Answer}`;
+                    $(".answers").val(answers);
+                    
                 }
             });
 
@@ -380,20 +423,38 @@
 </script>
 
 
+
+<script>
+    $(document).on("click", "#guaranteeNameId", function() {
+        var passedID = $(this).data('id');
+        $(".modal-body .guaranteeName").val(passedID);
+    });
+
+</script>
+
+
+<script>
+    var allEditors = document.querySelectorAll('.ck_editor_txt');
+    for (var i = 0; i < allEditors.length; ++i) {
+        ClassicEditor.create(allEditors[i]);
+    }
+</script>
+
+
 <script>
 
 
-    $(function () {
-        $("tbody").on("click", "#deleteGuaranteeNameId", function () {
+    $(function() {
+        $("tbody").on("click", "#deleteGuaranteeNameId", function() {
             var btn = $(this);
-            bootbox.confirm("<h5>Silmek istediğinize emin misiniz?</h5>", function (result) {
+            bootbox.confirm("<h5>Silmek istediğinize emin misiniz?</h5>", function(result) {
                 if (result) {
                     var id = btn.data("id");
                     console.log(id);
                     $.ajax({
                         type: "POST",
                         url: "/Admin/Admin/deletefaqs/" + id,
-                        success: function () {
+                        success: function() {
                             btn.parent().parent().remove();
                             console.log("başarılı");
 
@@ -411,55 +472,6 @@
 
 
 
-</script>
-
-
-<script>
-    $(function () {
-
-
-        $('#formGuarantee').validate({ // initialize the plugin
-            rules: {
-                guaranteeInp: {
-                    required: true,
-                },
-                guaranteeNameInp: {
-                    required: true,
-                }
-            },
-            messages: {
-                guaranteeInp: "Teminat adı zorunlu bir alan",
-                guaranteeNameInp: "Teminat detayları zorunlu bir alan"
-            },
-
-            submitHandler: function (form) {
-                var data = {
-                    Guarantee: $("#guarantee").val(),
-                    GuaranteeName: $("#guaranteeName").val(),
-                    insuranceListId: $("#insuranceListId").val()
-                }
-
-                $.ajax({
-                    type: "post",
-                    data: data,
-                    dataType: "JSON",
-                    url: "/admin/admin/AddNewGuaranteeName/",
-                    success: function (data) {
-                        let result = jQuery.parseJSON(data);
-                        console.log(result);
-                        var value = "";
-                        value += `${result.Name}`;
-                        $(".sss").html(value);
-                    }
-                })
-            }
-
-        });
-
-
-
-
-    });
 </script>
 
 
@@ -497,51 +509,9 @@
 </script>
 
 
-<script>
-    $(document).on("click", "#guaranteeeId", function () {
-        var passedID = $(this).data('id');
-        $(".modal-body .guarantee").val(passedID);
-    });
-
-</script>
-
-
-<script type="text/javascript">
-
-    $(function () {
-        $("tbody").on("click", "#guaranteeeId", function () {
-
-            let btn = $(this);
-            let id = btn.data("id");
-            $.ajax({
-                type: "GET",
-                dataType: "json",
-                url: "/admin/admin/getguarantee/" + id,
-                success: function (data) {
-                    let parseData = JSON.parse(data);
-                    console.log(parseData);
-
-                    let value = "";
-                    value += `${parseData.Name}`;
-
-                    $(".gu-ran").val(value);
-
-
-
-
-                }
-            });
-
-        });
-    });
-
-
-
-</script>
-
 
 <script>
-    $(function () {
+    $(function() {
 
 
         $('#formFaqs').validate({ // initialize the plugin
@@ -558,7 +528,7 @@
                 answer: "Cevap zorunlu bir alan"
             },
 
-            submitHandler: function (form) {
+            submitHandler: function(form) {
                 var data = {
                     Question: $(".questionNew").val(),
                     Answer: $(".answerNew").val(),
@@ -571,20 +541,20 @@
                     data: data,
                     dataType: "JSON",
                     url: "/admin/admin/NewFaqsCreate/",
-                    success: function (data) {
+                    success: function(data) {
                         let result = jQuery.parseJSON(data);
                         console.log(result);
                         var value = "";
                         value += `  <div class="d-flex">
-                                        <button class="toggle"><span>${result.Question}</span></button>
-                                        <div class="d-flex faqs-btn-group">
-                                            <button class="btn btn-warning faqs-btn">Düzenle</button>
-                                            <button class="btn btn-danger faqs-btn">Sil</button>
+                                            <button class="toggle"><span>${result.Question}</span></button>
+                                            <div class="d-flex faqs-btn-group">
+                                                <button class="btn btn-warning faqs-btn">Düzenle</button>
+                                                <button class="btn btn-danger faqs-btn">Sil</button>
+                                            </div>
                                         </div>
-                                    </div>
-                                     <div class="content">
-                                        <p>${result.Answer}</p>
-                                    </div>`;
+                                         <div class="content">
+                                            <p>${result.Answer}</p>
+                                        </div>`;
                         $(".wrapper").append(value);
                     }
                 })
@@ -599,71 +569,21 @@
 </script>
 
 
-<script>
-    $(document).on("click", "#faqsEditModal", function () {
-        var passedID = $(this).data('id');
-        $(".modal-body .faqs-edit").val(passedID);
-        var a = $(".faqs-edit").val();
-        console.log(a);
-    });
-
-</script>
-
-<script type="text/javascript">
-
-    $(function () {
-        $(".wrapper").on("click", "#faqsEditModal", function () {
-
-            let btn = $(this);
-            let id = btn.data("id");
-            $.ajax({
-                type: "GET",
-                dataType: "json",
-                url: "/admin/admin/GetFaqs/" + id,
-                success: function (data) {
-                    let parseData = JSON.parse(data);
-
-                    let questions = "";
-                    questions += `${parseData.Question}`;
-
-                    $(".question").val(questions);
-
-
-                    let answers = "";
-                    answers += `${parseData.Answer}`;
-
-                    $(".answer").val(answers);
-
-
-                }
-            });
-
-        });
-    });
-
-
-    function auto_grow(element) {
-        element.style.height = "5px";
-        element.style.height = (element.scrollHeight) + "px";
-    }
-
-</script>
-
 
 <script>
 
 
-    $(function () {
-        $(".wrapper").on("click", "#btn-delete", function () {
+    $(function() {
+        $(".wrapper").on("click", "#btn-delete", function() {
             var btn = $(this);
-            bootbox.confirm("<h5>Silmek istediğinize emin misiniz?</h5>", function (result) {
+            bootbox.confirm("<h5>Silmek istediğinize emin misiniz?</h5>", function(result) {
                 if (result) {
                     var id = btn.data("id");
                     console.log(id);
                     $.ajax({
                         type: "POST",
                         url: "/Admin/Admin/deletefaqs/" + id,
-                        success: function () {
+                        success: function() {
                             btn.parent().parent().parent().remove();
 
                         },

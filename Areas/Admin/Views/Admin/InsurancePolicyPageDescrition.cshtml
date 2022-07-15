@@ -613,7 +613,6 @@
                 </div>
                 <div class="row mb-2" style="margin:0">
                     <div class="col-md-12">
-
                         <form asp-area="Admin" asp-controller="Admin" asp-action="PageDescription" method="post" class="form-horizontal" role="form" name="f3" id="f3">
                             <div class="form-group">
                                 <label class="fieldlabels">Açıklama Adı: *</label>
@@ -622,11 +621,12 @@
                             </div>
                             <div class="form-group">
                                 <label class="fieldlabels">Açıklama Alanı: *</label>
-                                <textarea asp-for="@Model.Item3.PageDesc.PageDescWM.Description" class="ckeditor" name="cktext" id="editor"></textarea>
+                                <textarea class="ckeditor" name="cktext" id="editor">@Model.Item3.PageDesc.PageDescWM.Description</textarea>
                             </div>
-                            <button type="submit" class="btn btn-dark btn-success">Kaydet</button>
+                           <div class="btns">
+                                <button type="submit" class="btn btn-dark btn-success">Kaydet</button>
+                           </div>
                         </form>
-
                     </div>
                 </div>
             </div>
@@ -641,15 +641,12 @@
         $("#f3").validate(
             {
                 ignore: [],
+                errorClass:'error-validation',
                 debug: false,
                 rules: {
 
                     cktext: {
-                        required: function() {
-                            CKEDITOR.instances.cktext.updateElement();
-                        },
-
-                        minlength: 10
+                        required: true,
                     },
                     pageHeader: {
                         required: true,
@@ -660,15 +657,14 @@
 
                     cktext: {
                         required: "Sayfa açıklaması için başlık zorunlu bir alan",
-
-
                     },
                     pageHeader: {
                         required: "Sayfa açıklaması zorunlu bir alan",
-
-
                     }
                 }
             });
     });
 </script>
+
+
+

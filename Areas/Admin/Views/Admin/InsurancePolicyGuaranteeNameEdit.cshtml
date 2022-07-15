@@ -60,6 +60,14 @@
             </span>
         </div>   
         <div class="app-header__content">
+            <div class="app-header-left">
+                <div class="d-flex justify-content-between">
+                   @foreach (var item in Model.Item1.GuaranteeNameEditPage)
+                  {
+                       <span class="dashboard-text">@item.InsuranceName Teminat Düzenleme Sayfası</span>
+                  }
+                </div>
+            </div>
             <div class="app-header-right">
                 <div class="header-btn-lg pr-0">
                     <div class="widget-content p-0">
@@ -75,22 +83,22 @@
                                         <button type="button" tabindex="0" class="dropdown-item">Dividers</button>
                                     </div>
                                 </div>
-
                             </div>
-                           <div class="widget-content-left ml-3 header-user-info">
-                                 <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#settingsModal">
-                                        <div class="settings-image-group">
-                                            <img src="~/@Model.Item1.Image" class="settings-image" alt="">
+
+                            <div class="widget-content-left  ml-3 header-user-info">
+                                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#settingsModal">
+                                    <div class="settings-image-group">
+                                        <img src="~/@Model.Item1.Image" class="settings-image" alt="">
+                                    </div>
+                                    <div class="button-grps">
+                                        <div class="widget-heading">
+                                            <span class="own">Gökhan Sarılar</span>
                                         </div>
-                                        <div class="button-grps">
-                                             <div class="widget-heading">
-                                                    <span class="own">Gökhan Sarılar</span>
-                                             </div>
-                                             <div class="widget-subheading">
-                                                    BMG Sigorta - CEO
-                                             </div>
+                                        <div class="widget-subheading">
+                                            BMG Sigorta - CEO
                                         </div>
-                                 </button>
+                                    </div>
+                                </button>
                             </div>
                              @*settingsModal*@
                             <div class="modal fade" id="settingsModal" data-backdrop="false" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -138,8 +146,6 @@
                                     </div>
                                 </div>
                             </div>
-                       
-                        
                         </div>
                     </div>
                 </div>
@@ -547,21 +553,8 @@
         </div>
         <div class="app-main__outer">
             <div class="app-main__inner">
-                <div class="app-page-title">
-                    <div class="page-title-wrapper">
-                        <div class="page-title-heading">
-                            <div class="page-title-icon">
-                                <i class="pe-7s-car icon-gradient bg-mean-fruit">
-                                </i>
-                            </div>
-                            <div class="d-flex justify-content-between">
-                                <span class="dashboard-text">@Model.Item1.InsuranceLists.Name Düzenleme Sayfası</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
                 <div class="row new-info-row">
-                    <div class="col-11 col-sm-12 col-md-11 col-lg-11 col-xl-11 text-center mb-2">
+                    <div class="col-11 col-sm-12 col-md-11 col-lg-12 col-xl-12 text-center mb-2">
                         <div class="d-flex justify-content-end mb-3">
                             <a data-toggle="modal" data-target="#newGuaranteeName" class="new-gua bg-dark">Yeni Teminat Ekle</a>
 
@@ -582,7 +575,10 @@
                                                     <label class="label-g">Teminat Adı</label>
                                                     <input asp-for="@Model.Item2.Name" class="form-control">
                                                     <span asp-validation-for="@Model.Item2.Name" class="validation"></span>
-                                                    <input type="hidden" name="insuranceId" id="insuranceListId" class="form-control fa-que" value="@Model.Item1.InsuranceLists.Id">
+                                                    @foreach (var item in Model.Item1.GuaranteeNameEditPage)
+                                                   {
+                                                        <input type="hidden" name="insuranceId" id="insuranceListId" class="form-control fa-que" value="@item.Id">
+                                                   }
                                                 </div>
 
                                                 <div class="btns">
@@ -603,25 +599,43 @@
                                     <tr>
                                         <th scope="col">Teminat İsmi</th>
                                         <th scope="col">Poliçe Adı</th>
+                                        <th scope="col">Kategori Adı</th>
+                                        <th scope="col">Grup Adı</th>
                                         <th scope="col">Eklenme Tarihi</th>
                                         <th></th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach (var item in Model.Item1.InsuranceLists.Guarantees)
+
+                                    @foreach (var item in Model.Item1.GuaranteeNameEditPage)
                                     {
+                                        @foreach (var items in item.GuaranteeName)
+                                        {
+                                            <tr>
+                                                <td>@items.Guarantee</td>
+                                                <td>@item.InsuranceName</td>
+                                                <td>
+                                                    @foreach (var cat in item.CategoryName)
+                                                    {
+                                                        @cat
+                                                    }
+                                                </td>
+                                                <td>
+                                                     @foreach (var gr in item.GroupsName)
+                                                    {
+                                                        @gr.GroupName <br>
 
-                                        <tr>
-                                            <td>@item.Name</td>
-                                            <td>@item.InsuranceList.Name</td>
-                                            <td>@item.Date.ToString("dddd, MMMM d, yyyy");</td>
-                                            <td class="t-t">
-                                                <a asp-area="Admin" asp-controller="Admin" asp-action="GuaranteeNameDetails" asp-route-id="@item.Id" class="btn btn-dark all-button" type="button" id="">Görüntüle</a>
-                                                <button class="btn btn-secondary all-button" data-id="@item.Id" type="button" id="guaranteeeId" data-toggle="modal" data-target="#exampleModal">Düzenle</button>
-                                                <button class="btn btn-light all-button" data-id="@item.Id" id="deleteGuaranteeNameId">Sil</button>
-                                            </td>
-                                        </tr>
-
+                                                    }
+                                                </td>
+                                                <td>@items.CreatedDate.ToString("dddd, MMMM d, yyyy")</td>
+                                                <td class="t-t">
+                                                    <a asp-area="Admin" asp-controller="Admin" asp-action="GuaranteeNameDetails" asp-route-id="@items.GuaranteeId" class="btn btn-dark all-button" type="button">Görüntüle</a>
+                                                    <button class="btn btn-secondary all-button" data-id="@items.GuaranteeId" type="button" id="guaranteeeId" data-toggle="modal" data-target="#exampleModal">Düzenle</button>
+                                                    <button class="btn btn-light all-button" data-id="@items.GuaranteeId" id="deleteGuaranteeNameId">Sil</button>
+                                                </td>
+                                            </tr>
+                                        }
+                                      
                                     }
 
                                 </tbody>

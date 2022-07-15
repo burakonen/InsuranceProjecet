@@ -60,16 +60,17 @@
             </span>
         </div>
         <div class="app-header__content">
+            <div class="app-header-left">
+                <div class="d-flex justify-content-between">
+                    <span class="dashboard-text">BMG Sigorta Yönetim Sayfası</span>
+                </div>
+            </div>
             <div class="app-header-right">
                 <div class="header-btn-lg pr-0">
                     <div class="widget-content p-0">
                         <div class="widget-content-wrapper">
                             <div class="widget-content-left">
                                 <div class="btn-group">
-                                    <!-- Button trigger modal -->
-                                   @* <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#settingsModal">
-                                        <i class="fa fa-angle-down ml-2 opacity-8"></i>
-                                    </button>*@
                                     <div tabindex="-1" role="menu" aria-hidden="true" class="dropdown-menu dropdown-menu-right">
                                         <button type="button" tabindex="0" class="dropdown-item">User Account</button>
                                         <button type="button" tabindex="0" class="dropdown-item">Settings</button>
@@ -80,75 +81,73 @@
                                     </div>
                                 </div>
                             </div>
+
                             <div class="widget-content-left  ml-3 header-user-info">
-                                 <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#settingsModal">
-                                        <div class="settings-image-group">
-                                            <img src="~/@Model.Item1.Image" class="settings-image" alt="">
+                                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#settingsModal">
+                                    <div class="settings-image-group">
+                                        <img src="~/@Model.Item1.Image" class="settings-image" alt="">
+                                    </div>
+                                    <div class="button-grps">
+                                        <div class="widget-heading">
+                                            <span class="own">Gökhan Sarılar</span>
                                         </div>
-                                        <div class="button-grps">
-                                             <div class="widget-heading">
-                                                    <span class="own">Gökhan Sarılar</span>
-                                             </div>
-                                             <div class="widget-subheading">
-                                                    BMG Sigorta - CEO
-                                             </div>
+                                        <div class="widget-subheading">
+                                            BMG Sigorta - CEO
                                         </div>
-                                 </button>
+                                    </div>
+                                </button>
+                            </div>
+                            @*settingsModal*@
+                            <div class="modal fade" id="settingsModal" data-backdrop="false" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="exampleModalLabel">Ayarlar</h5>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+
+                                        <div class="modal-body" id="form-modal-body">
+                                            <form asp-area="admin" asp-controller="Admin" asp-action="EditSettings" method="post" enctype="multipart/form-data">
+                                                <div class="form-group">
+
+                                                    <div class="avatar-upload">
+                                                        <div class="avatar-edit">
+                                                            <input type='file' name="file" id="imageUpload" accept=".png, .jpg, .jpeg" onchange="previewFile()" />
+                                                            <label for="imageUpload"><i class="fa-solid fa-pencil"></i></label>
+                                                        </div>
+                                                        <div class="avatar-preview">
+                                                            <img id="imagePreview" src="~/@Model.Item1.Image">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="label-g" for="exampleInputEmail1">Email</label>
+                                                    <input class="form-control" asp-for="@Model.Item1.Email">
+                                                    <span class="validation" asp-validation-for="Item1.Email"></span>
+                                                    <small id="emailHelp" class="form-text text-muted"></small>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="label-g" for="exampleInputPassword1">Şifre</label>
+                                                    <input class="form-control" asp-for="@Model.Item1.Password">
+                                                    <span class="validation" asp-validation-for="Item1.Password"></span>
+                                                </div>
+                                                <div class="btns">
+                                                    <button type="submit" class="btn btn-dark">Kaydet</button>
+                                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Kapat</button>
+                                                </div>
+                                            </form>
+
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-       
-        @*settingsModal*@
-        <div class="modal fade" id="settingsModal" data-backdrop="false" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Ayarlar</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    
-                    <div class="modal-body" id="form-modal-body">
-                        <form asp-area="admin" asp-controller="Admin" asp-action="EditSettings" method="post" enctype="multipart/form-data">
-                            <div class="form-group">
-                               
-                                <div class="avatar-upload">
-                                    <div class="avatar-edit">
-                                        <input type='file' name="file" id="imageUpload" accept=".png, .jpg, .jpeg" onchange="previewFile()"/>
-                                        <label for="imageUpload"><i class="fa-solid fa-pencil"></i></label>
-                                    </div>
-                                    <div class="avatar-preview">
-                                        <img id="imagePreview" src="~/@Model.Item1.Image">
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="label-g" for="exampleInputEmail1">Email</label>
-                                <input class="form-control" asp-for="@Model.Item1.Email">
-                                <span class="validation" asp-validation-for="Item1.Email"></span>
-                                <small id="emailHelp" class="form-text text-muted"></small>
-                            </div>
-                            <div class="form-group">
-                                <label class="label-g" for="exampleInputPassword1">Şifre</label>
-                                <input class="form-control" asp-for="@Model.Item1.Password">
-                                <span class="validation" asp-validation-for="Item1.Password"></span>
-                            </div>
-                            <div class="btns">
-                                <button type="submit" class="btn btn-dark">Kaydet</button>
-                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Kapat</button>
-                            </div>
-                        </form>
-
-                    </div>
-                </div>
-            </div>
-        </div>
-   
-    
     </div>
     <div class="app-main">
         <div class="app-sidebar sidebar-shadow">
@@ -263,21 +262,10 @@
 
         <div class="app-main__outer">
             <div class="app-main__inner">
-                <div class="app-page-title" id="title">
-                    <div class="page-title-wrapper">
-                        <div class="page-title-heading">
-                            <div>
-                                <span class="dashboard-text"> Bmg Sigorta Yönetim Sayfası</span>
-                            </div>
-                        </div>
-
-                    </div>
-                </div>
-
                 <div class="row new-group-row">
                     <div class="col-md-6 col-xl-3 inf">
                         <a href="#">
-                            <div class="mb-3 widget-content bg-color">
+                            <div class="widget-content bg-color">
                                 <div class="widget-content-wrapper text-white">
                                     <div class="widget-content-left">
                                         <span class="widget-heading-text">Müşteriler</span>
@@ -291,7 +279,7 @@
                     </div>
                     <div class="col-md-6 col-xl-3 inf">
                         <a asp-area="Admin" asp-controller="Category" asp-action="Index" asp-route-name="@Model.Item1.IndividualGroup.GroupName">
-                            <div class="mb-3 widget-content bg-color1">
+                            <div class="widget-content bg-color1">
                                 <div class="widget-content-wrapper">
                                     <div class="widget-content-left">
                                         <span class="widget-heading-text">Bireysel</span>
@@ -307,7 +295,7 @@
                     </div>
                     <div class="col-md-6 col-xl-3 inf">
                         <a asp-area="Admin" asp-controller="Category" asp-action="Index" asp-route-name="@Model.Item1.CorporateGroup.GroupName">
-                            <div class="mb-3 widget-content bg-color2">
+                            <div class="widget-content bg-color2">
                                 <div class="widget-content-wrapper text-white">
                                     <div class="widget-content-left">
                                         <span class="widget-heading-text">Kurumsal</span>
@@ -324,7 +312,7 @@
                 </div>
 
                 <div class="row all-info-row">
-                    <div class="col-md-11 col-lg-11">
+                    <div class="col-md-11 col-lg-12">
                         <div class="info-div">
                             <h2 class="all-us">Tüm Kullanıcı Bilgileri</h2>
                             <div class="buttons">
@@ -347,6 +335,7 @@
                                         <th>Tarih</th>
                                         <th>Poliçe Adı</th>
                                         <th>Grup</th>
+                                        <th></th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -361,6 +350,9 @@
                                             <td>@user.Users.Date.ToString("dddd, MMMM d, yyyy");</td>
                                             <td>@user.Users.InsuranceList.Name</td>
                                             <td>@user.Groups.Name</td>
+                                             <td class="t-t">
+                                                    <button class="btn btn-dark all-button" data-id="@user.Users.Id" id="deleteUser">Sil</button>
+                                             </td>
                                         </tr>
 
                                     }
@@ -377,25 +369,42 @@
 </div>
 
 
+<script>
 
+    $(function() {
+        $("tbody").on("click", "#deleteUser", function() {
+            var btn = $(this);
+            bootbox.confirm("<h5>Silmek istediğinize emin misiniz?</h5>", function(result) {
+                if (result) {
+                    var id = btn.data("id");
+                    $.ajax({
+                        type: "POST",
+                        url: "/Admin/Admin/deleteUser/" + id,
+                        success: function() {
+                            btn.parent().parent().remove();
+                        },
+                    });
+                };
+            });
+        });
+    });
 
-
+</script>
 
 <script>
-   
+
     function previewFile() {
-      var preview = document.querySelector('img');
-      var file    = document.querySelector('input[type=file]').files[0];
-      var reader  = new FileReader();
+        var preview = document.querySelector('img');
+        var file = document.querySelector('input[type=file]').files[0];
+        var reader = new FileReader();
 
-      reader.addEventListener("load", function () {
-        preview.src = reader.result;
-      }, false);
+        reader.addEventListener("load", function() {
+            preview.src = reader.result;
+        }, false);
 
-      if (file) {
-        reader.readAsDataURL(file);
-      }
-     }
-
+        if (file) {
+            reader.readAsDataURL(file);
+        }
+    }
 
 </script>

@@ -70,7 +70,7 @@ namespace InsuranceProject.Controllers
             new SelectInsuranceListDetails()
             {
                 Advantages = o.Advantages.Select(s => new SelectAdvantages() { Name = s.Name, İcon = s.Icon}),
-                Guarantee = o.Guarantees.Where(s => s.IsDeleted == false).Select(o => new SelectGuarantee() { Guarantee = o.Name, GuaraneeNames = o.GuaranteeNames.Select(a => new SelectGuaranteeName() {Name = a.Name }) }),
+                Guarantee = o.Guarantees.Where(s => s.IsDeleted == false).Select(o => new SelectGuarantee() { Guarantee = o.Name, GuaraneeNames = o.GuaranteeNames.Select(a => new SelectGuaranteeName() {Name = a.Name, GuaranteeDescription = a.GuaranteeDescription}) }),
                 PageDescriptions = o.PageDescriptions.Select(s => new SelectPageDescriptions() { Header = s.Header, Descriptions = s.Description}),
                 PageImage = o.PageImages.Select(p => new SelectPageImage() {FileName = p.Name, Description = p.Description, PageHeader = p.PageHeader, Number = p.PhoneNumber }),
                 MainFaqs = o.MainFaqs.Select(a => new SelectMainFaqs() {Name = a.Name, Faqs = a.Faqs.Select(s => new SelectFaqs() {Answer = s.Answer, Question = s.Question}) })

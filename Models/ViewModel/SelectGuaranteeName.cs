@@ -9,5 +9,6 @@ namespace InsuranceProject.Models.ViewModel
     {
         public string Name { get; set; }
         public string GuaranteeName { get; set; }
+        public string GuaranteeDescription { get; set; }
     }
 }

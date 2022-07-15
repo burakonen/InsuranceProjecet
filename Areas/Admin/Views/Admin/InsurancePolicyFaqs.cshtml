@@ -7,7 +7,7 @@
 
 
 <script>
-    $(document).ready(function () {
+    $(document).ready(function() {
         $('#myTable').DataTable({
             language: {
 
@@ -58,18 +58,19 @@
                     </span>
                 </button>
             </span>
-        </div>   
+        </div>
         <div class="app-header__content">
+            <div class="app-header-left">
+                <div class="d-flex justify-content-between">
+                   <span class="dashboard-text">@Model.Item1.InsuranceLists.Name Sık Sorulanlar Sayfası</span>
+                </div>
+            </div>
             <div class="app-header-right">
                 <div class="header-btn-lg pr-0">
                     <div class="widget-content p-0">
                         <div class="widget-content-wrapper">
                             <div class="widget-content-left">
                                 <div class="btn-group">
-                                    <a data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="p-0 btn">
-                                        <img width="42" class="rounded-circle" src="assets/images/avatars/1.jpg" alt="">
-                                        <i class="fa fa-angle-down ml-2 opacity-8"></i>
-                                    </a>
                                     <div tabindex="-1" role="menu" aria-hidden="true" class="dropdown-menu dropdown-menu-right">
                                         <button type="button" tabindex="0" class="dropdown-item">User Account</button>
                                         <button type="button" tabindex="0" class="dropdown-item">Settings</button>
@@ -80,18 +81,67 @@
                                     </div>
                                 </div>
                             </div>
+
                             <div class="widget-content-left  ml-3 header-user-info">
-                                <div class="widget-heading">
-                                    <span class="own">Gökhan Sarılar</span>
-                                </div>
-                                <div class="widget-subheading">
-                                    BMG Sigorta - CEO
-                                </div>
-                            </div>
-                            <div class="widget-content-right header-user-info ml-3">
-                                <button type="button" class="btn-shadow p-1 btn btn-primary btn-sm show-toastr-example">
-                                    <i class="fa text-white fa-calendar pr-1 pl-1"></i>
+                                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#settingsModal">
+                                    <div class="settings-image-group">
+                                        <img src="~/@Model.Item1.Image" class="settings-image" alt="">
+                                    </div>
+                                    <div class="button-grps">
+                                        <div class="widget-heading">
+                                            <span class="own">Gökhan Sarılar</span>
+                                        </div>
+                                        <div class="widget-subheading">
+                                            BMG Sigorta - CEO
+                                        </div>
+                                    </div>
                                 </button>
+                            </div>
+                            @*settingsModal*@
+                            <div class="modal fade" id="settingsModal" data-backdrop="false" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="exampleModalLabel">Ayarlar</h5>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+
+                                        <div class="modal-body" id="form-modal-body">
+                                            <form asp-area="admin" asp-controller="Admin" asp-action="EditSettings" method="post" enctype="multipart/form-data">
+                                                <div class="form-group">
+
+                                                    <div class="avatar-upload">
+                                                        <div class="avatar-edit">
+                                                            <input type='file' name="file" id="imageUpload" accept=".png, .jpg, .jpeg" onchange="previewFile()" />
+                                                            <label for="imageUpload"><i class="fa-solid fa-pencil"></i></label>
+                                                        </div>
+                                                        <div class="avatar-preview">
+                                                            <img id="imagePreview" src="~/@Model.Item1.Image">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="label-g" for="exampleInputEmail1">Email</label>
+                                                    <input class="form-control" asp-for="@Model.Item1.Email">
+                                                    <span class="validation" asp-validation-for="Item1.Email"></span>
+                                                    <small id="emailHelp" class="form-text text-muted"></small>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="label-g" for="exampleInputPassword1">Şifre</label>
+                                                    <input class="form-control" asp-for="@Model.Item1.Password">
+                                                    <span class="validation" asp-validation-for="Item1.Password"></span>
+                                                </div>
+                                                <div class="btns">
+                                                    <button type="submit" class="btn btn-dark">Kaydet</button>
+                                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Kapat</button>
+                                                </div>
+                                            </form>
+
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -214,21 +264,8 @@
 
         <div class="app-main__outer">
             <div class="app-main__inner">
-                <div class="app-page-title">
-                    <div class="page-title-wrapper">
-                        <div class="page-title-heading">
-                            <div class="page-title-icon">
-                                <i class="pe-7s-car icon-gradient bg-mean-fruit">
-                                </i>
-                            </div>
-                            <div class="d-flex justify-content-between">
-                                <span class="dashboard-text">@Model.Item1.InsuranceLists.Name Sık Sorulanlar Düzenleme Sayfası</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
                 <div class="row new-info-row">
-                    <div class="col-11 col-sm-12 col-md-11 col-lg-11 col-xl-11 text-center text-center mb-2">
+                    <div class="col-11 col-sm-12 col-md-11 col-lg-12 col-xl-12 text-center text-center mb-2">
                         <div class="d-flex justify-content-end mb-3">
                             <a href="#" data-toggle="modal" data-target="#newGuaranteeName" class="new-gua bg-dark">Yeni Sorular Ekle</a>
 
@@ -332,7 +369,7 @@
 
 
 <script>
-    $(document).on("click", "#faqsId", function () {
+    $(document).on("click", "#faqsId", function() {
         var passedID = $(this).data('id');
         console.log(passedID);
         $(".modal-body .faqs").val(passedID);
@@ -343,8 +380,8 @@
 
 <script type="text/javascript">
 
-    $(function () {
-        $(".wrapper").on("click", "#faqsId", function () {
+    $(function() {
+        $(".wrapper").on("click", "#faqsId", function() {
 
             let btn = $(this);
             let id = btn.data("id");
@@ -353,7 +390,7 @@
                 type: "GET",
                 dataType: "json",
                 url: "/admin/admin/getfaqs/" + id,
-                success: function (data) {
+                success: function(data) {
                     let parseData = JSON.parse(data);
                     console.log(parseData);
 
@@ -418,17 +455,17 @@
 
 <script>
 
-    $(function () {
-        $("tbody").on("click", "#deleteMainfaqs", function () {
+    $(function() {
+        $("tbody").on("click", "#deleteMainfaqs", function() {
             var btn = $(this);
-            bootbox.confirm("<h5>Silmek istediğinize emin misiniz?</h5>", function (result) {
+            bootbox.confirm("<h5>Silmek istediğinize emin misiniz?</h5>", function(result) {
                 if (result) {
                     var id = btn.data("id");
                     console.log(id);
                     $.ajax({
                         type: "POST",
                         url: "/Admin/Admin/deleteMainfaqs/" + id,
-                        success: function () {
+                        success: function() {
                             btn.parent().parent().remove();
 
                         },
@@ -448,7 +485,7 @@
 
 
 <script>
-    $(document).on("click", "#mainFaqsId", function () {
+    $(document).on("click", "#mainFaqsId", function() {
         var passedID = $(this).data('id');
         console.log(passedID);
         $(".modal-body .header-faqs").val(passedID);
@@ -459,8 +496,8 @@
 
 <script type="text/javascript">
 
-    $(function () {
-        $("tbody").on("click", "#mainFaqsId", function () {
+    $(function() {
+        $("tbody").on("click", "#mainFaqsId", function() {
 
             let btn = $(this);
             let id = btn.data("id");
@@ -468,7 +505,7 @@
                 type: "GET",
                 dataType: "json",
                 url: "/admin/admin/MainFaqsGet/" + id,
-                success: function (data) {
+                success: function(data) {
                     let parseData = JSON.parse(data);
                     console.log(parseData);
                     let header = "";

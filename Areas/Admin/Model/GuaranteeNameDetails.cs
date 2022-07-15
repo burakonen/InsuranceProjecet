@@ -1,4 +1,5 @@
 ﻿using InsuranceProject.Context;
+using InsuranceProjectApp.Areas.Admin.Model;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -9,7 +10,7 @@ namespace InsuranceProject.Areas.Admin.Model
 {
     public class GuaranteeNameDetails
     {
-        public ICollection<Guarantees> Guarantees { get; set; }
+        public ICollection<SelectInsuranceGuarantee> Guarantees { get; set; }
 
         [Required(ErrorMessage = "Teminat ismi zorunlu bir alan")]
         public string Name { get; set; }

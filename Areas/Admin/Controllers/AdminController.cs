@@ -7,6 +7,7 @@ using InsuranceProject.Migrations;
 using InsuranceProject.Models;
 using InsuranceProject.Models.ViewModel;
 using InsuranceProjectApp.Areas.Admin.Model;
+using InsuranceProjectApp.Models.ViewModel;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -96,6 +97,7 @@ namespace InsuranceProject.Area.Admin.Controllers
 
 
             var insurancePolicies = await context.InsuranceLists.Where(a => a.SEOURL == url).Include(s => s.PageImages).FirstOrDefaultAsync();
+
             var insurancePoliciesUsers = context.Users.Where(i => i.InsuranceListId == insurancePolicies.Id).ToList();
             var individualGroupName = _getGroupNames.GetIndividiaulGroupName();
             var corporateGroupName = _getGroupNames.GetCorporateGroupName();
@@ -131,9 +133,24 @@ namespace InsuranceProject.Area.Admin.Controllers
                 return NotFound();
             }
 
+            
             var individualGroupName = _getGroupNames.GetIndividiaulGroupName();
             var corporateGroupName = _getGroupNames.GetCorporateGroupName();
-            var insurancePolicies = context.InsuranceLists.Where(a => a.SEOURL == url).Include(s => s.Guarantees.Where(s => s.IsDeleted == false)).FirstOrDefault();
+            var insurancePolicies = context.InsuranceLists.Where(a => a.SEOURL == url)
+                                    .Include(s => s.Guarantees.Where(s => s.IsDeleted == false))
+                                    .Include(a => a.Category)
+                                    .ThenInclude(s => s.GroupsAndCategories)
+                                    .ThenInclude(p => p.Groups).Select(a => new SelectInsuranceGuarantee() { 
+                                        Id = a.Id,
+                                        InsuranceName = a.Name,
+                                        GuaranteeName = a.Guarantees.Select(s => new SelectGuarantee(){Guarantee = s.Name, CreatedDate = s.Date, GuaranteeId = s.Id }).ToList(),
+                                        CategoryName = a.Category.Name,
+                                        GroupsName = a.Category.GroupsAndCategories.Select(i => new SelectGroupName() {GroupName = i.Groups.Name }).ToList()
+                                    }).ToList();
+
+
+
+
             var individualcategoryGroups = _getAllCategories.GetCategories();
             var CorporatecategoryGroups = _getAllCategories.GetCorporateCategorie();
             var admin = await context.Admin.FirstAsync();
@@ -142,7 +159,7 @@ namespace InsuranceProject.Area.Admin.Controllers
             {
                         IndividualGroup = individualGroupName,
                         CorporateGroup = corporateGroupName,
-                        InsuranceLists = insurancePolicies, 
+                        GuaranteeNameEditPage = insurancePolicies, 
                         CategoriesAndInsuranceList = individualcategoryGroups, 
                         CorporatecategoryGroups = CorporatecategoryGroups,
                         Email = admin.Email,
@@ -156,19 +173,14 @@ namespace InsuranceProject.Area.Admin.Controllers
 
 
         [HttpPost]
-        public async Task<IActionResult> InsurancePolicyNameEdit([Bind(Prefix ="Item1")] IndexWM model, int insuranceId)
+        public async Task<IActionResult> InsurancePolicyNameEdit(string insuranceName, int insuranceId)
         {
 
+            var entity = context.InsuranceLists.Find(insuranceId);
+            entity.Name = insuranceName;
+            await context.SaveChangesAsync();
 
-            if (ModelState.IsValid)
-            {
-                var entity = context.InsuranceLists.Find(insuranceId);
-                entity.Name = model.InsuranceLists.Name;
-                await context.SaveChangesAsync();
-
-                return RedirectToAction("Index");
-            }
-            return View(model);
+            return RedirectToAction("Index");
         }
 
 
@@ -231,12 +243,27 @@ namespace InsuranceProject.Area.Admin.Controllers
         }
 
 
+
         [Route("/admin/policeler/teminat-detayları/{id}")]
         public async Task<IActionResult> GuaranteeNameDetails(int id)
         {
             var individualGroupName = _getGroupNames.GetIndividiaulGroupName();
             var corporateGroupName = _getGroupNames.GetCorporateGroupName();
-            var guaranteeName = await context.Guarantees.Where(i => i.Id == id).Include(s => s.GuaranteeNames.Where(s => s.IsDeleted == false)).Include(s => s.InsuranceList).ToListAsync();
+
+            var guaranteeName = await context.Guarantees.Where(i => i.Id == id)
+                                .Include(s => s.GuaranteeNames)
+                                .Include(s => s.InsuranceList)
+                                .ThenInclude(a => a.Category)
+                                .Select(a => new SelectInsuranceGuarantee()
+                                {
+                                    Id = a.Id,
+                                    InsuranceName = a.InsuranceList.Name,
+                                    GuaranteeName = a.GuaranteeNames.Select(s => new SelectGuarantee() { Guarantee = s.Name, CreatedDate = s.Date, GuaranteeId = s.Id }).ToList(),
+                                    Guaraantee = a.Name,
+                                    CategoryName = a.InsuranceList.Category.Name,
+                                }).ToListAsync();
+
+
             var individualcategoryGroups = _getAllCategories.GetCategories();
             var CorporatecategoryGroups = _getAllCategories.GetCorporateCategorie();
             var admin = await context.Admin.FirstAsync();
@@ -359,31 +386,25 @@ namespace InsuranceProject.Area.Admin.Controllers
 
 
         [HttpPost]
-        public async Task<IActionResult> InsurancePolicyPageImageEdit([Bind(Prefix ="Item3")] PageImageModel model, int pageImageId)
+        public async Task<IActionResult> InsurancePolicyPageImageEdit(IFormFile file,  int pageImageId)
         {
 
-           if(ModelState.IsValid)
+            var pageImage = await context.PageImages.FindAsync(pageImageId);
+
+
+            Random rastgele = new Random();
+            int rndImamge = rastgele.Next();
+            string extension = Path.GetExtension(file.FileName);
+            var newİmageName = "Image-" + rndImamge.ToString() + extension;
+            string path = Path.Combine("wwwroot/img/InsuranceImage", newİmageName);
+            using (var fileStream = new FileStream(path, FileMode.Create))
             {
-                var pageImage = await context.PageImages.FindAsync(pageImageId);
-
-
-                Random rastgele = new Random();
-                int rndImamge = rastgele.Next();
-                string fileName = Path.GetFileNameWithoutExtension(model.PageImage.FileName);
-                string extension = Path.GetExtension(model.PageImage.FileName);
-                var newİmageName = "Image-" + rndImamge.ToString() + extension;
-                string path = Path.Combine("wwwroot/img/InsuranceImage", newİmageName);
-                using (var fileStream = new FileStream(path, FileMode.Create))
-                {
-                    await model.PageImage.CopyToAsync(fileStream);
-                }
-                pageImage.Name = "img/InsuranceImage" + newİmageName;
-
-
-
-                return RedirectToAction("Index");
+                await file.CopyToAsync(fileStream);
             }
-            return View(model);
+
+            pageImage.Name = "img/InsuranceImage" + newİmageName;
+
+            return RedirectToAction("Index");
 
         }
 
@@ -404,9 +425,12 @@ namespace InsuranceProject.Area.Admin.Controllers
             var insurancePolicies = await context.InsuranceLists.Where(a => a.SEOURL == url).Include(s => s.MainFaqs.Where(s => s.IsDeleted == false)).Include(i => i.Faqs).FirstOrDefaultAsync();
             var individualcategoryGroups = _getAllCategories.GetCategories();
             var CorporatecategoryGroups = _getAllCategories.GetCorporateCategorie();
-
+            var admin = await context.Admin.FirstAsync();
             return View(Tuple.Create<IndexWM, MainFaqsWM>(new IndexWM()
             {
+                Email = admin.Email,
+                Password = admin.PasswordHash,
+                Image = admin.Image,
                 IndividualGroup = individualGroupName,
                 CorporateGroup = corporateGroupName,
                 CategoriesAndInsuranceList = individualcategoryGroups, 
@@ -444,14 +468,15 @@ namespace InsuranceProject.Area.Admin.Controllers
 
             var individualGroupName = _getGroupNames.GetIndividiaulGroupName();
             var corporateGroupName = _getGroupNames.GetCorporateGroupName();
-
-
             var insurancePolicies = await context.MainFaqs.Where(a => a.Id == id).Include(i => i.Faqs).Include(s => s.InsuranceList).FirstOrDefaultAsync();
             var individualcategoryGroups = _getAllCategories.GetCategories();
             var CorporatecategoryGroups = _getAllCategories.GetCorporateCategorie();
-
+            var admin = await context.Admin.FirstAsync();
             return View(Tuple.Create<IndexWM, FaqsEditWM>(new IndexWM()
             {
+                Email = admin.Email,
+                Password = admin.PasswordHash,
+                Image = admin.Image,
                 IndividualGroup = individualGroupName,
                 CorporateGroup = corporateGroupName,
                 CategoriesAndInsuranceList = individualcategoryGroups, 
@@ -818,6 +843,20 @@ namespace InsuranceProject.Area.Admin.Controllers
                 return RedirectToAction("Index");
             }
             return View(model);
+        }
+
+
+
+        [HttpPost]
+        public async Task<IActionResult> deleteUser(string id)
+        {
+            var user = await context.Users.FindAsync(id);
+            if(user is not null)
+            {
+                user.IsDeleted = true;
+            }
+
+            return Ok();
         }
 
 

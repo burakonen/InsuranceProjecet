@@ -48,7 +48,7 @@
         </div>
     </div>
 
-    @*@if (Model.AdvantagesCount.AdvantCount == 0)
+    @if (Model.AdvantagesCount.AdvantCount == 0)
     {
         <div class="row advantage-row"  style="display:none">
             <div class="col-md-12 col-sm-12 advantage-col">
@@ -62,7 +62,7 @@
                         {
                             <div class="col-md-6 col-sm-6 res-col">
                                 <div class="d-flex justify-content-center">
-                                    <i class="@advantages.İcon"></i>
+                                    <i class="@advantages.İcon" id="ad-icon"></i>
                                 </div>
                                 <div class="d-flex justify-content-center">
                                     <h4 class="ad-n">@advantages.Name</h4>
@@ -99,7 +99,7 @@
                 </div>
             </div>
         </div>
-    }*@
+    }
 
 
     <div class="row guarantee-row">
@@ -120,7 +120,10 @@
                                 {
                                     <div class="col-md-6 guarantee-name-col">
                                         <span><i class="fa-solid fa-check"></i></span>
-                                        <h5 class="guarantee-name-detail-text">@guaranteeNames.Name</h5>
+                                        <div class="guarantee-groups">
+                                            <h5 class="guarantee-name-detail-text">@guaranteeNames.Name</h5>
+                                            <h5 class="guarantee-description">@Html.Raw(guaranteeNames.GuaranteeDescription)</h5>
+                                        </div>
                                     </div>
                                 }
                             </div>

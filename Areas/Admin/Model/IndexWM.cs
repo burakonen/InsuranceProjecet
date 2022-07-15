@@ -17,6 +17,7 @@ namespace InsuranceProject.Areas.Admin.Model
         public PageDescriptionsWM PageDesc { get; set; }
         public List<SelectCategory> CorporatecategoryGroups { get; set; }
         public InsuranceList InsuranceLists { get; set; }
+        public List<SelectInsuranceGuarantee> GuaranteeNameEditPage { get; set; }
         public Category Category { get; set; }
         public List<Users> InsuranceListUsers { get; set; }
         public MainFaqs MainFaqs { get; set; }
